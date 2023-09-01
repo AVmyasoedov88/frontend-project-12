@@ -5,6 +5,7 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { LoginProvider } from "./Context/loginContext";
+import { ApiProvider } from "./Context/ApiContext";
 import { Provider } from "react-redux";
 import store from "./store/index.js";
 
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <LoginProvider>
       <Provider store={store}>
-        <App />
+        <ApiProvider>
+          <App />
+        </ApiProvider>
       </Provider>
     </LoginProvider>
   </React.StrictMode>

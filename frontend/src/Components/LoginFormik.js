@@ -20,12 +20,12 @@ const LoginSchema = Yup.object().shape({
     .required("Обязательное поле"),
 });
 
+
 const FormLogin = () => {
-  const inputEl = useRef(null);
-  const { user, login } = useAuth();
+  const { auth, login } = useAuth();
   //const [error, setError] = useState(false);
   const error = useSelector((state) => state.errors.errorLogin);
-  // Возвращает метод store.dispatch() текущего хранилища
+  console.log(error)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,17 +41,15 @@ const FormLogin = () => {
         validationSchema={LoginSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const res = await axios.get(
-              "https://jsonplaceholder.typicode.com/todos/1"
-            ); //переделать
-            console.log(res.status);
+            const res = await axios.post(routes.loginPath(), values); //переделать
+            login(res.data)
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
             navigate(from);
             dispatch(errorLogin(null));
           } catch (err) {
             dispatch(errorLogin(err.code));
-            //console.log(error)
+            
           }
         }}
       >
@@ -90,18 +88,19 @@ const FormLogin = () => {
                 className="invalid-feedback"
               />
             </div>
-            {error ? <div>{error}</div> : null}
+            {error ? <div>Неверные имя пользователя или пароль</div> : null}
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
               //onClick={handleReset}
-            >
+              >
               Войти
             </button>
           </Form>
         )}
       </Formik>
+      
     </div>
   );
 };

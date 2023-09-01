@@ -6,12 +6,12 @@ const initialState = {
 };
 
 const errorSlice = createSlice({
-  name: "error",
+  name: "errors",
   initialState,
   reducers: {
     errorLogin: (state, { payload }) => {
       state.errorLogin = payload;
-      console.log(current(state));
+      
     },
   },
 });
