@@ -46,6 +46,11 @@ const channelMessageSlice = createSlice({
       // { id: 6 };
       delete state.channels[payload.id];
     },
+
+    renameChannel: (state, { payload }) => {
+      const { id, name } = payload;
+      state.channels[id] = { ...state.channels[id], name };
+    },
   },
 });
 
@@ -55,6 +60,7 @@ export const {
   makeActiveChannel,
   addMessages,
   deleteChannel,
+  renameChannel,
 } = channelMessageSlice.actions;
 
 export default channelMessageSlice.reducer;

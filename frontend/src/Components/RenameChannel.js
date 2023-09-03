@@ -12,7 +12,7 @@ import {
 import useApiSocet from "../hooks/useApi";
 
 const RenameChannel = (props) => {
-  const { addChannelSocet } = useApiSocet();
+  const { renameChannelSocet } = useApiSocet();
 
   return (
     <Modal {...props}>
@@ -23,9 +23,13 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             channelName: "",
+            id: props.id
           }}
           onSubmit={(values) => {
-            alert(JSON.stringify(values, null, 2));
+           //console.log(values)
+            renameChannelSocet(values);
+            // alert(JSON.stringify(values, null, 2));
+            //alert(props.id)
           }}
         >
           <Form>

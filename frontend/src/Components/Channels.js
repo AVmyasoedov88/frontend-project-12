@@ -72,6 +72,7 @@ const Channels = () => {
                 <RenameChannel
                   show={renameModalShow}
                   onHide={() => setRenameModalShow(false)}
+                  id = {id}
                 />
               </DropdownButton>
             ) : null}

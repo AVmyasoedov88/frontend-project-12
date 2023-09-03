@@ -6,7 +6,8 @@ import {
   addChannel,
   makeActiveChannel,
   addMessages,
-  deleteChannel
+  deleteChannel,
+  renameChannel,
 } from "../slices/channelMessageSlice";
 
 const apiContext = createContext({});
@@ -25,21 +26,24 @@ export const ApiProvider = ({ children }) => {
   };
 
   const deleteChannelSocet = (id) => () => {
-  
     socket.emit("removeChannel", { id: `${id}` });
     socket.on("removeChannel", (payload) => {
-      console.log(payload); // { id: 6 };
+      console.log(payload);
       dispatch(deleteChannel(payload));
     });
   };
 
-  const renameChannelSocet = (id) => () => {
-    //socket.emit('renameChannel', { id: 7, name: "new name channel" });
-  // work renamemodal
-  }
+  const renameChannelSocet = ({ id, channelName }) => {
+    socket.emit("renameChannel", { id: `${id}`, name: `${channelName}` });
+    socket.on("renameChannel", (payload) => {
+      dispatch(renameChannel(payload));
+    });
+  };
 
   return (
-    <apiContext.Provider value={{ addChannelSocet, deleteChannelSocet }}>
+    <apiContext.Provider
+      value={{ addChannelSocet, deleteChannelSocet, renameChannelSocet }}
+    >
       {children}
     </apiContext.Provider>
   );
