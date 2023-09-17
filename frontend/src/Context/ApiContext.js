@@ -23,7 +23,7 @@ export const ApiProvider = ({ children }) => {
 
   const addChannelSocet = (channelName) => {
     socket.emit("newChannel", { name: `${channelName}` }, (response) => {
-      console.log(response); // ok
+      console.log(response); // ok //В консоли приходит сообщение, что данные ушли на сервер, даже когда интерент отключен.
     });
   };
 
