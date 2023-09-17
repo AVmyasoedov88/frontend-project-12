@@ -7,6 +7,8 @@ import {
   Nav,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { useRef } from 'react';
+
 import {
   addChannel,
   makeActiveChannel,
@@ -17,6 +19,7 @@ import { io } from "socket.io-client";
 import useApiSocet from "../hooks/useApi";
 import React, { useEffect, useState } from "react";
 import RenameChannel from "./RenameChannel";
+import { useTranslation } from 'react-i18next';
 
 const socket = io("/");
 
@@ -24,25 +27,18 @@ const Channels = () => {
   const dispatch = useDispatch();
   const [renameModalShow, setRenameModalShow] = useState(false);
   const { deleteChannelSocet } = useApiSocet();
+  const { t } = useTranslation();
 
   //получить данные из state, через map вставить
   const channels = useSelector((state) => state.channelMessage.channels);
   const currentChannelId = useSelector(
     (state) => state.channelMessage.currentChannelId
   );
-  // console.log(currentChannelId)
-  // Возвращает метод store.dispatch() текущего хранилища
+
   const handleClick = (id) => () => {
     //alert(`Check button ${id}`)
     dispatch(makeActiveChannel(id));
   };
-
-  const showRenameChannel = () => {
-    //<RenameChannel show={modalShow} onHide={() => setModalShow(false)} />;
-    console.log("rename");
-  };
-
-  //
 
   return (
     <Nav variant="pills" as="ul">
@@ -63,16 +59,20 @@ const Channels = () => {
                 as={ButtonGroup}
                 title=""
                 id="bg-vertical-dropdown-1"
-                
               >
                 <Dropdown.Item eventKey="1" onClick={deleteChannelSocet(id)}>
-                  Удалить
+                  {t('delete')}
                 </Dropdown.Item>
-                <Dropdown.Item eventKey="2"onClick={() => setRenameModalShow(true)}>Переименовать</Dropdown.Item>
+                <Dropdown.Item
+                  eventKey="2"
+                  onClick={() => setRenameModalShow(true)}
+                >
+                  {t('rename')}
+                </Dropdown.Item>
                 <RenameChannel
                   show={renameModalShow}
                   onHide={() => setRenameModalShow(false)}
-                  id = {id}
+                  id={id}
                 />
               </DropdownButton>
             ) : null}

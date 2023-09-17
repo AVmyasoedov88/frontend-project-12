@@ -12,8 +12,14 @@ export const LoginProvider = ({ children }) => {
     window.localStorage.setItem("username", res.username);
     setAuth(res);
   };
+
+  const logOut = () => {
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("username");
+    setAuth({auth: "null"});
+  }
   return (
-    <loginContext.Provider value={{ auth, login }}>
+    <loginContext.Provider value={{ auth, login, logOut }}>
       {children}
     </loginContext.Provider>
   );

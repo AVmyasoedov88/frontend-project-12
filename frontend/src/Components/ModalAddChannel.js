@@ -1,58 +1,81 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
-import React, { useEffect, useRef, useState } from "react";
-import { getStatusView } from "../slices/modalViewSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { io } from "socket.io-client";
-import {
-  addChannel,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
-import useApiSocet from "../hooks/useApi";
+import React, { forwardRef } from "react";
+import { useSelector } from "react-redux";
 
-//const socket = io("/");
-const ModalAddChannel = (props) => {
+import useApiSocet from "../hooks/useApi";
+import { newChannelSchema } from "../Validation/validationSchema";
+import { useTranslation } from "react-i18next";
+
+const ModalAddChannel = forwardRef((props, ref) => {
   const { addChannelSocet } = useApiSocet();
+  const { t } = useTranslation();
+  const channels = useSelector((state) => state.channelMessage.channels);
+  const channelsArray = Object.entries(channels).map(
+    ([id, { name, removable }]) => name
+  );
 
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t("addNewChannel")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{
             channelName: "",
           }}
+          validationSchema={newChannelSchema(channelsArray)}
           onSubmit={(values) => {
-            addChannelSocet(values.channelName);
+            try {
+              addChannelSocet(values.channelName);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
-          <Form>
-            <Field
-              id="channelName"
-              name="channelName"
-              className="mb-2 form-control"
-            />
+          {({ errors, touched, isSubmitting }) => (
+            <Form>
+              <Field
+                id="channelName"
+                name="channelName"
+                className={`mb-2 form-control ${
+                  touched.channelName && errors.channelName ? "is-invalid" : ""
+                } `}
+                required
+              />
+              <ErrorMessage
+                component="div"
+                name="channelName"
+                className="invalid-feedback"
+              />
 
-            <div className="d-flex justify-content-end">
-              <button
-                type="button"
-                className="me-2 btn btn-secondary"
-                onClick={props.onHide}
-              >
-                Отменить
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Отправить
-              </button>
-            </div>
-          </Form>
+              <div className="d-flex justify-content-end">
+                <button
+                  ref={ref}
+                  type="button"
+                  className="me-2 btn btn-secondary"
+                  onClick={props.onHide}
+                >
+                  Отменить
+                </button>
+                <button
+                  onClick={props.onHide}
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={
+                    touched.channelName && errors.channelName ? true : false
+                  }
+                >
+                  Отправить
+                </button>
+              </div>
+            </Form>
+          )}
         </Formik>
       </Modal.Body>
     </Modal>
   );
-};
+});
 
 export default ModalAddChannel;

@@ -1,34 +1,44 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { io } from "socket.io-client";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addChannel,
   makeActiveChannel,
-  addMessages,
+  addMessage,
   deleteChannel,
   renameChannel,
 } from "../slices/channelMessageSlice";
 
+//const util = require('node:util');
+
 const apiContext = createContext({});
 const socket = io("/");
+//const stat = promisify(fs.stat);
+
+//const promisifySocket =     promisify(socket.emit(arg));
 
 export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const addChannelSocet = (channelName) => {
-    socket.emit("newChannel", { name: `${channelName}` });
-    socket.on("newChannel", (payload) => {
-      dispatch(addChannel(payload));
-      console.log(payload);
-      //обработать ошибки
+    socket.emit("newChannel", { name: `${channelName}` }, (response) => {
+      console.log(response); // ok
     });
   };
 
+  socket.on("newChannel", (payload) => {
+    const { id } = payload;
+    console.log("newChannel", id);
+    dispatch(addChannel(payload));
+    dispatch(makeActiveChannel(id));
+    
+  });
+
   const deleteChannelSocet = (id) => () => {
     socket.emit("removeChannel", { id: `${id}` });
+
     socket.on("removeChannel", (payload) => {
-      console.log(payload);
       dispatch(deleteChannel(payload));
     });
   };
@@ -40,9 +50,33 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  const addMessageSocet = ({ body, channelId, username }) => {
+    try {
+      socket.emit("newMessage", {
+        body: `${body}`,
+        channelId: channelId,
+        username: `${username}`,
+      });
+      socket.on("newMessage", (payload) => {
+        console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+        dispatch(addMessage(payload));
+      });
+    } catch {
+      console.log("ERROR");
+      socket.io.on("error", (error) => {
+        console.log(error);
+      });
+    }
+  };
+
   return (
     <apiContext.Provider
-      value={{ addChannelSocet, deleteChannelSocet, renameChannelSocet }}
+      value={{
+        addChannelSocet,
+        deleteChannelSocet,
+        renameChannelSocet,
+        addMessageSocet,
+      }}
     >
       {children}
     </apiContext.Provider>

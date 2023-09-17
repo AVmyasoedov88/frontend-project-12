@@ -1,6 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import Channels from "./Channels";
@@ -16,23 +17,26 @@ import {
 } from "../slices/channelMessageSlice";
 import { getStatusView } from "../slices/modalViewSlice.js";
 import ModalAddChannel from "./ModalAddChannel";
+import routes from "../hooks/routes";
 
 const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
+  const ref = useRef();
+
 
   useEffect(() => {
     async function fetchData() {
       const { token } = auth;
-      const response = await axios.get("/api/v1/data", {
+      const response = await axios.get(routes.dataPath(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      dispatch(addChannels(response.data.channels));
       dispatch(makeActiveChannel(response.data.currentChannelId));
+      dispatch(addChannels(response.data.channels));
       dispatch(addMessages(response.data.messages));
     }
     fetchData();
@@ -63,11 +67,11 @@ const ChatForm = () => {
                 </svg>
               </Button>
             </div>
-            
+
             <ModalAddChannel
+              ref={ref}
               show={modalShow}
               onHide={() => setModalShow(false)}
-              
             />
 
             <Channels />

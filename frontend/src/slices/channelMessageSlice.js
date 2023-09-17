@@ -19,6 +19,7 @@ const channelMessageSlice = createSlice({
   initialState,
   reducers: {
     addChannels: (state, { payload }) => {
+
       payload.forEach(({ id, name, removable }) => {
         state.channels[id] = { name, removable };
       });
@@ -31,6 +32,7 @@ const channelMessageSlice = createSlice({
       state.currentChannelId = Number(payload);
     },
     addMessages: (state, { payload }) => {
+
       payload.reduce((res, el) => {
         const { id, body, username, channelId } = el;
         res[id] = {
@@ -42,8 +44,17 @@ const channelMessageSlice = createSlice({
         return res;
       }, state);
     },
+
+    addMessage: (state, { payload }) => {
+      const { id, body, username, channelId } = payload;
+      state.messages[id] = { body, username, channelId };
+    },
+
     deleteChannel: (state, { payload }) => {
       // { id: 6 };
+      if (payload.id === state.currentChannelId) {
+        state.currentChannelId = 1;
+      }
       delete state.channels[payload.id];
     },
 
@@ -59,6 +70,7 @@ export const {
   addChannels,
   makeActiveChannel,
   addMessages,
+  addMessage,
   deleteChannel,
   renameChannel,
 } = channelMessageSlice.actions;

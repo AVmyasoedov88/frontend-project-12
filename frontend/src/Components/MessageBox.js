@@ -12,7 +12,7 @@ const MessageBox = () => {
 
   const messages = useSelector((state) => state.channelMessage.messages);
 
-  //console.log(Object.entries(messages));
+  //console.log(messages);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">

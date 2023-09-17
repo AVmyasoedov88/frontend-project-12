@@ -4,9 +4,12 @@ import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import image from "/home/anton/frontend-project-12/frontend/src/img/hexlet.jpeg";
+import { useTranslation } from 'react-i18next';
 
 
 const Login = () => {
+  const { t } = useTranslation();
+
   return (
     
     <Container fluid className="d-flex flex-column vh-100">
@@ -31,8 +34,8 @@ const Login = () => {
                 
               </Card.Body>
               <Card.Footer className="p-4 text-center">
-                <span>Нет аккаунта?</span>
-                <a href="/signup">Регистрация</a>
+                <span>{t('notAccount')}</span>
+                <a href="/signup">{t('registration')}</a>
               </Card.Footer>
             </Card>
           </Col>

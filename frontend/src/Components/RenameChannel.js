@@ -31,6 +31,7 @@ const RenameChannel = (props) => {
             // alert(JSON.stringify(values, null, 2));
             //alert(props.id)
           }}
+
         >
           <Form>
             <Field
@@ -47,7 +48,11 @@ const RenameChannel = (props) => {
               >
                 Отменить
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button 
+              type="submit" 
+              className="btn btn-primary"
+              onClick={props.onHide}
+              >
                 Отправить
               </button>
             </div>
