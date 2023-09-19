@@ -8,21 +8,9 @@ import routes from "../hooks/routes.js";
 import axios from "axios";
 import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import {signUpSchema} from "../Validation/validationSchema";
 
-const LoginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, "Минимум 3 буквы")
-    .max(20, "Максимум 20 букв")
-    .required("Обязательное поле"),
-  password: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(50, "Максимум 50 букв")
-    .required("Обязательное поле"),
-  confirmPassword: Yup.string()
-  .required("Обязательное поле")
-  .oneOf([Yup.ref('password'), null], 'Пароли не совпадают')
-  
-});
 
 const SignUpLogin = () => {
   const { auth, login } = useAuth();
@@ -32,17 +20,18 @@ const SignUpLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <div>
-      <h1 className="text-center mb-4">Регистрация</h1>
+      <h1 className="text-center mb-4">{t('registration')}</h1>
       <Formik
         initialValues={{
           username: "",
           password: "",
           confirmPassword: "",
         }}
-        validationSchema={LoginSchema}
+        validationSchema={signUpSchema}
         onSubmit={async (values, { setSubmitting }) => {
           const {username, password} = values
           try {
@@ -114,14 +103,14 @@ const SignUpLogin = () => {
                 className="invalid-tooltip"
               />
             </div>
-            {error ? <div >Такой пользователь уже существует</div> : null}
+            {error ? <div >{t('userIsExist')}</div> : null}
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
               //onClick={handleReset}
             >
-              Зарегистрироваться
+             {t('makeRegistration')}
             </button>
           </Form>
         )}

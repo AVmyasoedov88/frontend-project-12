@@ -10,14 +10,17 @@ import {
   addMessages,
 } from "../slices/channelMessageSlice";
 import useApiSocet from "../hooks/useApi";
+import { useTranslation } from "react-i18next";
+
 
 const RenameChannel = (props) => {
   const { renameChannelSocet } = useApiSocet();
+  const { t } = useTranslation();
 
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
@@ -46,14 +49,14 @@ const RenameChannel = (props) => {
                 className="me-2 btn btn-secondary"
                 onClick={props.onHide}
               >
-                Отменить
+                {t('cancel')}
               </button>
               <button 
               type="submit" 
               className="btn btn-primary"
               onClick={props.onHide}
               >
-                Отправить
+                {t('send')}
               </button>
             </div>
           </Form>

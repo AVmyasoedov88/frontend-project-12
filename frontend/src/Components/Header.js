@@ -4,6 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import useAuth from "../hooks/useAuth.js";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 
 const Header = () => {
   const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
@@ -11,12 +13,13 @@ const Header = () => {
   const { token } = auth;
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Navbar expand="lg" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <Container>
         <Navbar.Brand href="/login">Hexlet Chat</Navbar.Brand>
-        {token ? (<Button variant="primary" onClick={logOut}>Выйти</Button>) : null}
+        {token ? (<Button variant="primary" onClick={logOut}>{t('exit')}</Button>) : null}
         
         
       </Container>

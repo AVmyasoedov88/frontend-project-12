@@ -9,16 +9,9 @@ import axios from "axios";
 import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-const LoginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(50, "Максимум 50 букв")
-    .required("Обязательное поле"),
-  password: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(50, "Максимум 50 букв")
-    .required("Обязательное поле"),
-});
+import {loginSchema} from "../Validation/validationSchema";
+
+
 
 
 const FormLogin = () => {
@@ -40,7 +33,7 @@ const FormLogin = () => {
           username: "",
           password: "",
         }}
-        validationSchema={LoginSchema}
+        validationSchema={loginSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const res = await axios.post(routes.loginPath(), values); //переделать

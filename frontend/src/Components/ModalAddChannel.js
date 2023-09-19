@@ -26,9 +26,11 @@ const ModalAddChannel = forwardRef((props, ref) => {
             channelName: "",
           }}
           validationSchema={newChannelSchema(channelsArray)}
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             try {
-              addChannelSocet(values.channelName);
+             await addChannelSocet(values.channelName)
+            
+          
             } catch (error) {
               console.log(error);
             }
