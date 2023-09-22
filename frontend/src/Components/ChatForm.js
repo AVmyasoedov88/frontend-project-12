@@ -9,13 +9,12 @@ import ChatHeader from "./ChatHeader.js";
 import FormMessage from "./FormMessage";
 import Header from "./Header";
 import MessageBox from "./MessageBox";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addChannels,
   makeActiveChannel,
   addMessages,
 } from "../slices/channelMessageSlice";
-import { getStatusView } from "../slices/modalViewSlice.js";
 import ModalAddChannel from "./ModalAddChannel";
 import routes from "../hooks/routes";
 

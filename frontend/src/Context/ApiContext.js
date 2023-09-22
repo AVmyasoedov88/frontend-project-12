@@ -9,52 +9,36 @@ import {
   deleteChannel,
   renameChannel,
 } from "../slices/channelMessageSlice";
-
-//const util = require('node:util');
+import { ToastContainer, toast } from "react-toastify";
 
 const apiContext = createContext({});
 const socket = io("/");
+//const notify = () => toast("Wow so easy!");
 
 export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  const addChannelSocet = async (channelName) => {
-    try {
-      await socket.emitWithAck("newChannel", { name: `${channelName}` });
-    } catch (err) {
-      console.log(err);
-    }
+  const addChannelSocet = (channelName) => {
+    socket.emitWithAck("newChannel", { name: `${channelName}` });
   };
 
-  const deleteChannelSocet = (id) => async () => {
-    try {
-      await socket.emitWithAck("removeChannel", { id: `${id}` });
-    } catch (err) {
-      console.log(err);
-    }
+  const deleteChannelSocet = (id) => () => {
+    socket.emitWithAck("removeChannel", { id: `${id}` });
   };
 
-  const renameChannelSocet = async ({ id, channelName }) => {
-    try {
-      await socket.emitWithAck("renameChannel", {
-        id: `${id}`,
-        name: `${channelName}`,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  const renameChannelSocet = ({ id, channelName }) => {
+    socket.emitWithAck("renameChannel", {
+      id: `${id}`,
+      name: `${channelName}`,
+    });
   };
 
-  const addMessageSocet = async ({ body, channelId, username }) => {
-    try {
-      await socket.emitWithAck("newMessage", {
-        body: `${body}`,
-        channelId: channelId,
-        username: `${username}`,
-      });
-    } catch {
-      console.log("ERROR");
-    }
+  const addMessageSocet = ({ body, channelId, username }) => {
+    socket.emitWithAck("newMessage", {
+      body: `${body}`,
+      channelId: channelId,
+      username: `${username}`,
+    });
   };
 
   socket.on("newChannel", (payload) => {

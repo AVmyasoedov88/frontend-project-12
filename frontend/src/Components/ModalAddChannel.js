@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
 
 const ModalAddChannel = forwardRef((props, ref) => {
   const { addChannelSocet } = useApiSocet();
@@ -14,6 +17,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
   const channelsArray = Object.entries(channels).map(
     ([id, { name, removable }]) => name
   );
+  const notify = () => toast("Wow so easy!");
 
   return (
     <Modal {...props}>
@@ -28,9 +32,8 @@ const ModalAddChannel = forwardRef((props, ref) => {
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-             await addChannelSocet(values.channelName)
-            
-          
+             await addChannelSocet(values.channelName);
+              toast.success("Wow so easy!");
             } catch (error) {
               console.log(error);
             }
@@ -76,6 +79,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
           )}
         </Formik>
       </Modal.Body>
+      <ToastContainer />
     </Modal>
   );
 });
