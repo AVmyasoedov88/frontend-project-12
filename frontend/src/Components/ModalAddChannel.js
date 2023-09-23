@@ -17,6 +17,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
   const channelsArray = Object.entries(channels).map(
     ([id, { name, removable }]) => name
   );
+
   const notify = () => toast("Wow so easy!");
 
   return (
@@ -32,14 +33,13 @@ const ModalAddChannel = forwardRef((props, ref) => {
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-             await addChannelSocet(values.channelName);
+              addChannelSocet(values.channelName);
               toast.success("Wow so easy!");
-            } catch (error) {
-              console.log(error);
-            }
+              //notify()
+            } catch (err) {}
           }}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched }) => (
             <Form>
               <Field
                 id="channelName"
@@ -79,7 +79,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
           )}
         </Formik>
       </Modal.Body>
-      <ToastContainer />
+     
     </Modal>
   );
 });

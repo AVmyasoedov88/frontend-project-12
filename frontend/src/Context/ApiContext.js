@@ -10,6 +10,7 @@ import {
   renameChannel,
 } from "../slices/channelMessageSlice";
 import { ToastContainer, toast } from "react-toastify";
+//const {promisify} = require("es6-promisify");
 
 const apiContext = createContext({});
 const socket = io("/");
@@ -19,7 +20,14 @@ export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const addChannelSocet = (channelName) => {
-    socket.emitWithAck("newChannel", { name: `${channelName}` });
+    try {
+      socket.emitWithAck("newChannel", {name: `${channelName}`});
+      
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("addChannel")
+    }
   };
 
   const deleteChannelSocet = (id) => () => {
