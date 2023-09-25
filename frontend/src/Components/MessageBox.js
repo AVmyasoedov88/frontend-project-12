@@ -4,6 +4,8 @@ import {
   makeActiveChannel,
   addMessages,
 } from "../slices/channelMessageSlice";
+import filter from 'leo-profanity';
+import React, { useEffect, useRef } from 'react';
 
 const MessageBox = () => {
   const currentChannelId = useSelector(
@@ -11,6 +13,9 @@ const MessageBox = () => {
   );
 
   const messages = useSelector((state) => state.channelMessage.messages);
+  useEffect(() => {
+    filter.add(filter.getDictionary('ru'));
+  }, []);
 
   //console.log(messages);
 
@@ -25,7 +30,7 @@ const MessageBox = () => {
           <div className="text-break mb-2" key={id}>
             
             <b>{username}: </b>
-            <span>{body}</span>
+            <span>{filter.clean(body)}</span>
             
             
           </div>

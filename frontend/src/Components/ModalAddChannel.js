@@ -2,13 +2,11 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
 import React, { forwardRef } from "react";
 import { useSelector } from "react-redux";
-
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
 import { useTranslation } from "react-i18next";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useFormik } from "formik";
 
 const ModalAddChannel = forwardRef((props, ref) => {
   const { addChannelSocet } = useApiSocet();
@@ -19,7 +17,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
   );
 
   const notify = () => toast("Wow so easy!");
-
+  
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
@@ -33,10 +31,11 @@ const ModalAddChannel = forwardRef((props, ref) => {
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-              addChannelSocet(values.channelName);
-              toast.success("Wow so easy!");
-              //notify()
-            } catch (err) {}
+              await addChannelSocet(values.channelName);
+              notify()
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
           {({ errors, touched }) => (
@@ -74,12 +73,12 @@ const ModalAddChannel = forwardRef((props, ref) => {
                 >
                   Отправить
                 </button>
+                <ToastContainer />
               </div>
             </Form>
           )}
         </Formik>
       </Modal.Body>
-     
     </Modal>
   );
 });

@@ -12,6 +12,7 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import resources from "./locales/index.js";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -20,16 +21,25 @@ const init = async () => {
     fallbackLng: "ru",
   });
 
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    environment: "testenv",
+  };
+
   return (
-    <React.StrictMode>
-      <LoginProvider>
-        <Provider store={store}>
-          <ApiProvider>
-            <App />
-          </ApiProvider>
-        </Provider>
-      </LoginProvider>
-    </React.StrictMode>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <React.StrictMode>
+          <LoginProvider>
+            <Provider store={store}>
+              <ApiProvider>
+                <App />
+              </ApiProvider>
+            </Provider>
+          </LoginProvider>
+        </React.StrictMode>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 
   // If you want to start measuring performance in your app, pass a function
