@@ -2,7 +2,7 @@
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import image from "/home/anton/frontend-project-12/frontend/src/img/signUpImg.jpg";
+import image from "../img/signUpImg.jpeg";
 import SignUpLogin from "./SignUpFormik";
 
 
