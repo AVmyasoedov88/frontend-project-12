@@ -1,5 +1,4 @@
 import {
-  Container,
   Button,
   ButtonGroup,
   DropdownButton,
@@ -7,16 +6,12 @@ import {
   Nav,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useRef } from "react";
 
 import {
-  addChannel,
   makeActiveChannel,
-  addMessages,
-  deleteChannel,
 } from "../slices/channelMessageSlice";
 import useApiSocet from "../hooks/useApi";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RenameChannel from "./RenameChannel";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";

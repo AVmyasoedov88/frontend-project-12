@@ -1,21 +1,9 @@
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Field, Form, Formik } from "formik";
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Image,
   Button,
-  ListGroup,
-  Modal,
 } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addChannel,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
+import { useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { useTranslation } from "react-i18next";
 

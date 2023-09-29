@@ -1,7 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import Channels from "./Channels";

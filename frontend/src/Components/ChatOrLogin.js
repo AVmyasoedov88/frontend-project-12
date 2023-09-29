@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth.js";
 import ChatForm from "./ChatForm.js";
-import { useEffect } from "react";
+
 
 const ChatOrLogin = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const ChatOrLogin = () => {
   const location = useLocation();
   const { auth } = useAuth();
   const { token } = auth;
-  const { username } = auth;
+  
 
   const { from } = location.state || { from: { pathname: "/login" } };
 

@@ -1,11 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addChannel,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
+import { useSelector } from "react-redux";
 import filter from 'leo-profanity';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 const MessageBox = () => {
   const currentChannelId = useSelector(
