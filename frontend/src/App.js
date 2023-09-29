@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React from "react";
+import React, { StrictMode } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -8,10 +8,10 @@ import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import ChatOrLogin from "./Components/ChatOrLogin";
 import Error404 from "./Components/Error404";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 const App = () => (
- 
+  <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<Login />} />
@@ -21,7 +21,7 @@ const App = () => (
       </Routes>
       <ToastContainer />
     </BrowserRouter>
- 
+  </StrictMode>
 );
 
 export default App;

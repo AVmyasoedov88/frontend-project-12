@@ -9,12 +9,10 @@ import axios from "axios";
 import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {signUpSchema} from "../Validation/validationSchema";
-
+import { signUpSchema } from "../Validation/validationSchema";
 
 const SignUpLogin = () => {
   const { auth, login } = useAuth();
-  //const [error, setError] = useState(false);
   const error = useSelector((state) => state.errors.errorLogin);
   console.log(error);
   const dispatch = useDispatch();
@@ -24,7 +22,7 @@ const SignUpLogin = () => {
 
   return (
     <div>
-      <h1 className="text-center mb-4">{t('registration')}</h1>
+      <h1 className="text-center mb-4">{t("registration")}</h1>
       <Formik
         initialValues={{
           username: "",
@@ -33,21 +31,24 @@ const SignUpLogin = () => {
         }}
         validationSchema={signUpSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          const {username, password} = values
+          const { username, password } = values;
           try {
-            const res = await axios.post(routes.signUpPath(), {username, password}); //переделать
+            const res = await axios.post(routes.signUpPath(), {
+              username,
+              password,
+            });
             login(res.data);
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
             navigate(from);
             dispatch(errorLogin(null));
           } catch (err) {
-            console.log(err)
+            console.log(err);
             dispatch(errorLogin(err.code));
           }
         }}
       >
-        {({ errors, touched, isSubmitting, handleReset, handleSubmit }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">
               <Field
@@ -103,14 +104,14 @@ const SignUpLogin = () => {
                 className="invalid-tooltip"
               />
             </div>
-            {error ? <div >{t('userIsExist')}</div> : null}
+            {error ? <div>{t("userIsExist")}</div> : null}
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
               //onClick={handleReset}
             >
-             {t('makeRegistration')}
+              {t("makeRegistration")}
             </button>
           </Form>
         )}

@@ -32,7 +32,7 @@ const FormLogin = () => {
         validationSchema={loginSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const res = await axios.post(routes.loginPath(), values); //переделать
+            const res = await axios.post(routes.loginPath(), values); 
             login(res.data);
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
@@ -64,6 +64,7 @@ const FormLogin = () => {
             <div className="form-floating mb-4">
               <Field
                 name="password"
+                type="password"
                 required
                 placeholder="Пароль"
                 className={`form-control ${

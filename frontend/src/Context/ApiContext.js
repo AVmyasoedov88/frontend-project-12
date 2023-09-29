@@ -13,33 +13,42 @@ import {
 const apiContext = createContext({});
 const socket = io("/");
 
-socket.on('connect', () => {
-  socket.sendBuffer = []
-})
-
+socket.on("connect", () => {
+  socket.sendBuffer = [];
+});
 
 export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const addChannelSocet = (channelName, cb) => {
-    socket.emit("newChannel", { name: `${channelName}`}, (response) => {
-      if(response.status === 'ok') {
-        cb()
+    socket.emit("newChannel", { name: `${channelName}` }, (response) => {
+      if (response.status === "ok") {
+        cb();
       }
-    })
-      
-    
-  };
-
-  const deleteChannelSocet = (id) => () => {
-    socket.emitWithAck("removeChannel", { id: `${id}` });
-  };
-
-  const renameChannelSocet = ({ id, channelName }) => {
-    socket.emitWithAck("renameChannel", {
-      id: `${id}`,
-      name: `${channelName}`,
     });
+  };
+
+  const deleteChannelSocet = (id, cb) => () => {
+    socket.emit("removeChannel", { id: `${id}` }, (response) => {
+      if (response.status === "ok") {
+        cb();
+      }
+    });
+  };
+
+  const renameChannelSocet = ({ id, channelName }, cb) => {
+    socket.emit(
+      "renameChannel",
+      {
+        id: `${id}`,
+        name: `${channelName}`,
+      },
+      (response) => {
+        if (response.status === "ok") {
+          cb();
+        }
+      }
+    );
   };
 
   const addMessageSocet = ({ body, channelId, username }) => {

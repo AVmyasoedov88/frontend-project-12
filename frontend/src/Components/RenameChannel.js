@@ -1,47 +1,35 @@
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Field, Form, Formik } from "formik";
 import { Modal } from "react-bootstrap";
-import React, { useEffect, useRef, useState } from "react";
-import { getStatusView } from "../slices/modalViewSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { io } from "socket.io-client";
-import {
-  addChannel,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
+import React, {  } from "react";
 import useApiSocet from "../hooks/useApi";
 import { useTranslation } from "react-i18next";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const RenameChannel = (props) => {
   const { renameChannelSocet } = useApiSocet();
   const { t } = useTranslation();
-  const notify = () => {
-    return toast("Wow so easy!")
-    console.log('toast')
-  };
+  const notify = () => toast(t("channelRename"));
 
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
-        <Modal.Title>{t('renameChannel')}</Modal.Title>
+        <Modal.Title>{t("renameChannel")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{
             channelName: "",
-            id: props.id
+            id: props.id,
           }}
-          onSubmit={(values) => {
-           //console.log(values)
-            renameChannelSocet(values);
-            notify()
-            // alert(JSON.stringify(values, null, 2));
-            //alert(props.id)
+          onSubmit={async (values) => {
+            try {
+              await renameChannelSocet(values, notify);
+              props.onHide();
+            } catch (error) {
+              toast.error(error);
+            }
           }}
-
         >
           <Form>
             <Field
@@ -56,14 +44,14 @@ const RenameChannel = (props) => {
                 className="me-2 btn btn-secondary"
                 onClick={props.onHide}
               >
-                {t('cancel')}
+                {t("cancel")}
               </button>
-              <button 
-              type="submit" 
-              className="btn btn-primary"
-              onClick={props.onHide}
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={props.onHide}
               >
-                {t('send')}
+                {t("send")}
               </button>
             </div>
           </Form>

@@ -17,8 +17,6 @@ const MessageBox = () => {
     filter.add(filter.getDictionary('ru'));
   }, []);
 
-  //console.log(messages);
-
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
       {Object.entries(messages)

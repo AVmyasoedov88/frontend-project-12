@@ -19,6 +19,9 @@ export default {
     key_many: "{{count}} сообщений",
     errBadRequest: "Ошибка соединения",
     unknownErr: "Неизвестная ошибка",
+    addChannel: "Канал создан",
+    channelRename: "Канал переименован",
+    deleteChannel: "Канал удален"
   },
   
 };

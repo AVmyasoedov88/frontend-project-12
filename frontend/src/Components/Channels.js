@@ -7,7 +7,7 @@ import {
   Nav,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useRef } from 'react';
+import { useRef } from "react";
 
 import {
   addChannel,
@@ -15,28 +15,26 @@ import {
   addMessages,
   deleteChannel,
 } from "../slices/channelMessageSlice";
-import { io } from "socket.io-client";
 import useApiSocet from "../hooks/useApi";
 import React, { useEffect, useState } from "react";
 import RenameChannel from "./RenameChannel";
-import { useTranslation } from 'react-i18next';
-
-const socket = io("/");
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Channels = () => {
   const dispatch = useDispatch();
   const [renameModalShow, setRenameModalShow] = useState(false);
   const { deleteChannelSocet } = useApiSocet();
   const { t } = useTranslation();
+  const notify = () => toast.success(t("deleteChannel"));
 
-  //получить данные из state, через map вставить
   const channels = useSelector((state) => state.channelMessage.channels);
   const currentChannelId = useSelector(
     (state) => state.channelMessage.currentChannelId
   );
 
   const handleClick = (id) => () => {
-    //alert(`Check button ${id}`)
     dispatch(makeActiveChannel(id));
   };
 
@@ -60,14 +58,17 @@ const Channels = () => {
                 title=""
                 id="bg-vertical-dropdown-1"
               >
-                <Dropdown.Item eventKey="1" onClick={deleteChannelSocet(id)}>
-                  {t('delete')}
+                <Dropdown.Item
+                  eventKey="1"
+                  onClick={deleteChannelSocet(id, notify)}
+                >
+                  {t("delete")}
                 </Dropdown.Item>
                 <Dropdown.Item
                   eventKey="2"
                   onClick={() => setRenameModalShow(true)}
                 >
-                  {t('rename')}
+                  {t("rename")}
                 </Dropdown.Item>
                 <RenameChannel
                   show={renameModalShow}

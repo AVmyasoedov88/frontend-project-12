@@ -17,7 +17,7 @@ import {
 } from "../slices/channelMessageSlice";
 import ModalAddChannel from "./ModalAddChannel";
 import routes from "../hooks/routes";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 
@@ -25,7 +25,7 @@ const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const ref = useRef();
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const ChatForm = () => {
     }
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, auth, t]);
 
   return (
     <Container className="d-flex flex-column h-100">
@@ -79,7 +79,6 @@ const ChatForm = () => {
             </div>
 
             <ModalAddChannel
-              ref={ref}
               show={modalShow}
               onHide={() => setModalShow(false)}
             />

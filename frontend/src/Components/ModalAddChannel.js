@@ -1,11 +1,11 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
-import React, { forwardRef, useState } from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import React, { forwardRef } from "react";
+import { useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
 import { useTranslation } from "react-i18next";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ModalAddChannel = forwardRef((props, ref) => {
@@ -16,7 +16,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
     ([id, { name, removable }]) => name
   );
 
-  const notify = () => toast.success("Wow so easy!");
+  const notify = () => toast.success(t('addChannel'));
 
   return (
     <Modal {...props}>
