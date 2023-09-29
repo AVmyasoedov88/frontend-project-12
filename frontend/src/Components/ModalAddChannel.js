@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
-import React, { forwardRef } from "react";
-import { useSelector } from "react-redux";
+import React, { forwardRef, useState } from "react";
+import { shallowEqual, useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
 import { useTranslation } from "react-i18next";
@@ -16,8 +16,8 @@ const ModalAddChannel = forwardRef((props, ref) => {
     ([id, { name, removable }]) => name
   );
 
-  const notify = () => toast("Wow so easy!");
-  
+  const notify = () => toast.success("Wow so easy!");
+
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
@@ -31,10 +31,11 @@ const ModalAddChannel = forwardRef((props, ref) => {
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-              await addChannelSocet(values.channelName);
-              notify()
+              await addChannelSocet(values.channelName, notify);
+              props.onHide();
+              //toast.success("Wow so easy!");
             } catch (error) {
-              console.log(error);
+              toast.error(error);
             }
           }}
         >
@@ -61,19 +62,18 @@ const ModalAddChannel = forwardRef((props, ref) => {
                   className="me-2 btn btn-secondary"
                   onClick={props.onHide}
                 >
-                  Отменить
+                 {t('cancel')}
                 </button>
                 <button
-                  onClick={props.onHide}
+                  //onClick={props.onHide}
                   type="submit"
                   className="btn btn-primary"
                   disabled={
                     touched.channelName && errors.channelName ? true : false
                   }
                 >
-                  Отправить
+                  {t('send')}
                 </button>
-                <ToastContainer />
               </div>
             </Form>
           )}

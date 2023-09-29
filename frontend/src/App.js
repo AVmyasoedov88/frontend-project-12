@@ -8,9 +8,10 @@ import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import ChatOrLogin from "./Components/ChatOrLogin";
 import Error404 from "./Components/Error404";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => (
-  <React.StrictMode>
+ 
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<Login />} />
@@ -18,8 +19,9 @@ const App = () => (
         <Route path="/" element={<ChatOrLogin />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
-  </React.StrictMode>
+ 
 );
 
 export default App;

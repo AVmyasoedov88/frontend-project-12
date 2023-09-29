@@ -17,28 +17,38 @@ import {
 } from "../slices/channelMessageSlice";
 import ModalAddChannel from "./ModalAddChannel";
 import routes from "../hooks/routes";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
   const ref = useRef();
-
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchData() {
       const { token } = auth;
-      const response = await axios.get(routes.dataPath(), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const response = await axios.get(routes.dataPath(), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      dispatch(makeActiveChannel(response.data.currentChannelId));
-      dispatch(addChannels(response.data.channels));
-      dispatch(addMessages(response.data.messages));
+        dispatch(makeActiveChannel(response.data.currentChannelId));
+        dispatch(addChannels(response.data.channels));
+        dispatch(addMessages(response.data.messages));
+      } catch (error) {
+        if (!error.isAxiosError) {
+          toast.error(t("unknownErr"));
+        }
+        toast.error(t("errBadRequest"));
+      }
     }
+
     fetchData();
   }, [dispatch]);
 

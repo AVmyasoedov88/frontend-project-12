@@ -4,35 +4,33 @@ import { useSelector, useDispatch } from "react-redux";
 const newChannelSchema = (data) =>
   Yup.object().shape({
     channelName: Yup.string()
-      .min(3, "Минимум 2 буквы")
-      .max(50, "Максимум 50 букв")
+      .min(3, "От 3 до 20 символов")
+      .max(20, "От 3 до 20 символов")
       .required("Обязательное поле")
-      .notOneOf(data, "Non"),
+      .notOneOf(data, "Канал с таким именем уже существует"),
   });
 
 const loginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(50, "Максимум 50 букв")
+  username:
+    Yup.string()
     .required("Обязательное поле"),
-  password: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(50, "Максимум 50 букв")
+  password:
+    Yup.string()
     .required("Обязательное поле"),
 });
 
 const signUpSchema = Yup.object().shape({
   username: Yup.string()
-    .min(3, "Минимум 3 буквы")
-    .max(20, "Максимум 20 букв")
+    .min(3, "От 3 до 20 символов")
+    .max(20, "От 3 до 20 символов")
     .required("Обязательное поле"),
   password: Yup.string()
-    .min(2, "Минимум 2 буквы")
+    .min(2, "Не менее 6 символов")
     .max(50, "Максимум 50 букв")
     .required("Обязательное поле"),
   confirmPassword: Yup.string()
     .required("Обязательное поле")
-    .oneOf([Yup.ref("password"), null], "Пароли не совпадают"),
+    .oneOf([Yup.ref("password"), null], "Пароли должны совпадать"),
 });
 
 export { newChannelSchema, loginSchema, signUpSchema };

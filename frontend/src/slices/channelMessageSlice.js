@@ -19,7 +19,6 @@ const channelMessageSlice = createSlice({
   initialState,
   reducers: {
     addChannels: (state, { payload }) => {
-
       payload.forEach(({ id, name, removable }) => {
         state.channels[id] = { name, removable };
       });
@@ -32,7 +31,6 @@ const channelMessageSlice = createSlice({
       state.currentChannelId = Number(payload);
     },
     addMessages: (state, { payload }) => {
-
       payload.reduce((res, el) => {
         const { id, body, username, channelId } = el;
         res[id] = {

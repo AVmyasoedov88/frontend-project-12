@@ -8,22 +8,18 @@ import routes from "../hooks/routes.js";
 import axios from "axios";
 import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
-import {loginSchema} from "../Validation/validationSchema";
-
-
-
+import { useTranslation } from "react-i18next";
+import { loginSchema } from "../Validation/validationSchema";
 
 const FormLogin = () => {
   const { auth, login } = useAuth();
   //const [error, setError] = useState(false);
   const error = useSelector((state) => state.errors.errorLogin);
-  console.log(error)
+  console.log(error);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-
 
   return (
     <div>
@@ -37,18 +33,17 @@ const FormLogin = () => {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const res = await axios.post(routes.loginPath(), values); //переделать
-            login(res.data)
+            login(res.data);
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
             navigate(from);
             dispatch(errorLogin(null));
           } catch (err) {
             dispatch(errorLogin(err.code));
-            
           }
         }}
       >
-        {({ errors, touched, isSubmitting, handleReset, handleSubmit }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">
               <Field
@@ -83,19 +78,18 @@ const FormLogin = () => {
                 className="invalid-feedback"
               />
             </div>
-            {error ? <div>{t('errorUsenamePassword')}</div> : null}
+            {error ? <div>{t("errorUsenamePassword")}</div> : null}
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
               //onClick={handleReset}
-              >
+            >
               Войти
             </button>
           </Form>
         )}
       </Formik>
-      
     </div>
   );
 };

@@ -11,11 +11,17 @@ import {
 } from "../slices/channelMessageSlice";
 import useApiSocet from "../hooks/useApi";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const RenameChannel = (props) => {
   const { renameChannelSocet } = useApiSocet();
   const { t } = useTranslation();
+  const notify = () => {
+    return toast("Wow so easy!")
+    console.log('toast')
+  };
 
   return (
     <Modal {...props}>
@@ -31,6 +37,7 @@ const RenameChannel = (props) => {
           onSubmit={(values) => {
            //console.log(values)
             renameChannelSocet(values);
+            notify()
             // alert(JSON.stringify(values, null, 2));
             //alert(props.id)
           }}

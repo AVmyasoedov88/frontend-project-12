@@ -10,20 +10,25 @@ import {
   renameChannel,
 } from "../slices/channelMessageSlice";
 
-//const {promisify} = require("es6-promisify");
-
 const apiContext = createContext({});
 const socket = io("/");
+
+socket.on('connect', () => {
+  socket.sendBuffer = []
+})
+
 
 export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  const addChannelSocet = (channelName) => {
-    socket.emit("newChannel", { name: `${channelName}` }, (response) => {
-      if (response.status === "ok") {
-        console.log(response);
+  const addChannelSocet = (channelName, cb) => {
+    socket.emit("newChannel", { name: `${channelName}`}, (response) => {
+      if(response.status === 'ok') {
+        cb()
       }
-    });
+    })
+      
+    
   };
 
   const deleteChannelSocet = (id) => () => {

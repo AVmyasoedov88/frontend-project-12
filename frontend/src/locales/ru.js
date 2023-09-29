@@ -17,5 +17,8 @@ export default {
     key_one: "{{count}} сообщение",
     key_few: "{{count}} сообщения",
     key_many: "{{count}} сообщений",
+    errBadRequest: "Ошибка соединения",
+    unknownErr: "Неизвестная ошибка",
   },
+  
 };
