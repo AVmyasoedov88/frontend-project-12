@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
 
 const newChannelSchema = (data) =>
   Yup.object().shape({
@@ -11,12 +10,8 @@ const newChannelSchema = (data) =>
   });
 
 const loginSchema = Yup.object().shape({
-  username:
-    Yup.string()
-    .required("Обязательное поле"),
-  password:
-    Yup.string()
-    .required("Обязательное поле"),
+  username: Yup.string().required("Обязательное поле"),
+  password: Yup.string().required("Обязательное поле"),
 });
 
 const signUpSchema = Yup.object().shape({

@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Начальное значение
 const initialState = {
@@ -11,7 +11,6 @@ const errorSlice = createSlice({
   reducers: {
     errorLogin: (state, { payload }) => {
       state.errorLogin = payload;
-      
     },
   },
 });

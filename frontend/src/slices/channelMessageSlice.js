@@ -1,17 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { omit } from "lodash";
 
-// Начальное значение
 const initialState = {
   channels: {},
   currentChannelId: null,
-  messages: {
-    1: { body: "message text", channelId: 1, username: "admin" },
-    2: { body: "message text2", channelId: 2, username: "admin2" },
-    3: { body: "message text2", channelId: 2, username: "admin2" },
-    4: { body: "message text2", channelId: 2, username: "admin2" },
-    5: { body: "message text3", channelId: 2, username: "admin3" },
-  },
+  messages: {},
 };
 
 const channelMessageSlice = createSlice({

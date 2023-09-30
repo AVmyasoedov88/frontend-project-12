@@ -1,6 +1,5 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// Начальное значение
 const initialState = {
   getStatusView: false,
 };
@@ -11,7 +10,6 @@ const modalViewSlice = createSlice({
   reducers: {
     getStatusView: (state, { payload }) => {
       state.view = payload;
-      console.log(payload)
     },
   },
 });
