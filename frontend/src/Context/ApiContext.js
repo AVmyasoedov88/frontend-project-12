@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext } from "react";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";

@@ -1,11 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addChannel,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
-import { isEmpty } from "lodash";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const ChatHeader = () => {

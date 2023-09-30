@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as Yup from "yup";
 import useAuth from "../hooks/useAuth.js";
 import routes from "../hooks/routes.js";
 import axios from "axios";
@@ -12,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { loginSchema } from "../Validation/validationSchema";
 
 const FormLogin = () => {
-  const { auth, login } = useAuth();
+  const { login } = useAuth();
   //const [error, setError] = useState(false);
   const error = useSelector((state) => state.errors.errorLogin);
   console.log(error);
@@ -32,7 +29,7 @@ const FormLogin = () => {
         validationSchema={loginSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const res = await axios.post(routes.loginPath(), values); 
+            const res = await axios.post(routes.loginPath(), values);
             login(res.data);
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };

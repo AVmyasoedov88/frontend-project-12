@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as Yup from "yup";
 import useAuth from "../hooks/useAuth.js";
 import routes from "../hooks/routes.js";
 import axios from "axios";
@@ -10,9 +8,8 @@ import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { signUpSchema } from "../Validation/validationSchema";
-
 const SignUpLogin = () => {
-  const { auth, login } = useAuth();
+  const { login } = useAuth();
   const error = useSelector((state) => state.errors.errorLogin);
   console.log(error);
   const dispatch = useDispatch();
