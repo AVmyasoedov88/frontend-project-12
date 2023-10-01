@@ -11,6 +11,9 @@
   },
   "author": "Anton",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AVmyasoedov88/frontend-project-12/issues"
+  },
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6"
   }

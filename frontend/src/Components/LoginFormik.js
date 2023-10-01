@@ -50,6 +50,7 @@ const FormLogin = () => {
                   touched.username && errors.username ? "is-invalid" : ""
                 }`}
                 required
+                autoComplete="given-name" 
               />
               <ErrorMessage
                 component="div"
