@@ -54,7 +54,7 @@ const SignUpLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder= {t('signUp.username')}
+                placeholder={t("signUp.username")}
                 className={`form-control ${
                   touched.username && errors.username ? "is-invalid" : ""
                 }`}
@@ -63,7 +63,7 @@ const SignUpLogin = () => {
                 type="text"
               />
               <label className="form-label" htmlFor="username">
-                {t('signUp.username')}
+                {t("signUp.username")}
               </label>
               <ErrorMessage
                 component="div"
@@ -77,7 +77,7 @@ const SignUpLogin = () => {
                 name="password"
                 type="password"
                 required
-                placeholder={t('password')}
+                placeholder={t("password")}
                 className={`form-control ${
                   touched.password && errors.password ? "is-invalid" : ""
                 }`}
@@ -85,7 +85,7 @@ const SignUpLogin = () => {
                 wfd-id="id1"
               />
               <label className="form-label" htmlFor="password">
-                {t('password')}
+                {t("password")}
               </label>
               <ErrorMessage
                 component="div"
@@ -98,7 +98,7 @@ const SignUpLogin = () => {
                 name="confirmPassword"
                 type="password"
                 required
-                placeholder={t('confirmPassword')}
+                placeholder={t("confirmPassword")}
                 className={`form-control ${
                   touched.confirmPassword && errors.confirmPassword
                     ? "is-invalid"
@@ -108,7 +108,7 @@ const SignUpLogin = () => {
                 wfd-id="id1"
               />
               <label className="form-label" htmlFor="confirmPassword">
-                {t('confirmPassword')}
+                {t("confirmPassword")}
               </label>
               <ErrorMessage
                 component="div"
