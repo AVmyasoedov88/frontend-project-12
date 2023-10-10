@@ -3,13 +3,15 @@ export default {
   translation: {
     login: {
       errorLogin: "Неверные имя пользователя или пароль",
+      username: "ваш ник",
     },
 
     signUp: {
       errorSignUp: "Такой пользователь уже существует",
+      username: "Имя пользователя",
     },
     enter: "Войти",
-    username: "Ваш ник",
+    
     password: "Пароль",
     addNewChannel: "Добавить канал",
     delete: "Удалить",

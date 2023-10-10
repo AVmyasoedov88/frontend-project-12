@@ -49,7 +49,7 @@ const FormLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder={t('username')}
+                placeholder={t('login.username')}
                 className={`form-control ${
                   (touched.username && errors.username) || errorLogin
                     ? "is-invalid"
@@ -59,7 +59,7 @@ const FormLogin = () => {
                 autoComplete="given-name"
               />
               <label className="form-label" htmlFor="username">
-              {t('username')}
+              {t('login.username')}
               </label>
 
               <ErrorMessage

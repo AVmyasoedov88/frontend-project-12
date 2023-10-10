@@ -54,7 +54,7 @@ const SignUpLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder= {t('username')}
+                placeholder= {t('signUp.username')}
                 className={`form-control ${
                   touched.username && errors.username ? "is-invalid" : ""
                 }`}
@@ -63,7 +63,7 @@ const SignUpLogin = () => {
                 type="text"
               />
               <label className="form-label" htmlFor="username">
-                {t('username')}
+                {t('signUp.username')}
               </label>
               <ErrorMessage
                 component="div"
