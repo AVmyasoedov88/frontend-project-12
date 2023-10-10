@@ -2,20 +2,21 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useAuth from "../hooks/useAuth.js";
-import routes from "../hooks/routes.js";
+import { requireAuth } from "../routes.js";
 import axios from "axios";
-import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { signUpSchema } from "../Validation/validationSchema";
+import { useState } from "react";
+
 const SignUpLogin = () => {
-  const { login } = useAuth();
-  const error = useSelector((state) => state.errors.errorLogin);
-  console.log(error);
-  const dispatch = useDispatch();
+  const { logIn } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const [errorSignUp, setErrorSignUp] = useState(false);
+  const erroLSignUpMessage = t("signUp.errorSignUp");
 
   return (
     <div>
@@ -30,18 +31,21 @@ const SignUpLogin = () => {
         onSubmit={async (values, { setSubmitting }) => {
           const { username, password } = values;
           try {
-            const res = await axios.post(routes.signUpPath(), {
+            const res = await axios.post(requireAuth.signUpPath(), {
               username,
               password,
             });
-            login(res.data);
+            console.log(res.data);
+            logIn(res.data);
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
             navigate(from);
-            dispatch(errorLogin(null));
           } catch (err) {
-            console.log(err);
-            dispatch(errorLogin(err.code));
+            if (err.isAxiosError && err.response.status === 401) {
+              console.log(err);
+              setErrorSignUp(true);
+              return;
+            }
           }
         }}
       >
@@ -50,13 +54,17 @@ const SignUpLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder="Ваш ник"
+                placeholder= {t('username')}
                 className={`form-control ${
                   touched.username && errors.username ? "is-invalid" : ""
                 }`}
                 required
                 autoComplete="given-name"
+                type="text"
               />
+              <label className="form-label" htmlFor="username">
+                {t('username')}
+              </label>
               <ErrorMessage
                 component="div"
                 name="username"
@@ -69,13 +77,16 @@ const SignUpLogin = () => {
                 name="password"
                 type="password"
                 required
-                placeholder="Пароль"
+                placeholder={t('password')}
                 className={`form-control ${
                   touched.password && errors.password ? "is-invalid" : ""
                 }`}
                 autoComplete="current-password"
                 wfd-id="id1"
               />
+              <label className="form-label" htmlFor="password">
+                {t('password')}
+              </label>
               <ErrorMessage
                 component="div"
                 name="password"
@@ -87,7 +98,7 @@ const SignUpLogin = () => {
                 name="confirmPassword"
                 type="password"
                 required
-                placeholder="Пароль"
+                placeholder={t('confirmPassword')}
                 className={`form-control ${
                   touched.confirmPassword && errors.confirmPassword
                     ? "is-invalid"
@@ -96,13 +107,18 @@ const SignUpLogin = () => {
                 autoComplete="current-password"
                 wfd-id="id1"
               />
+              <label className="form-label" htmlFor="confirmPassword">
+                {t('confirmPassword')}
+              </label>
               <ErrorMessage
                 component="div"
                 name="confirmPassword"
                 className="invalid-tooltip"
               />
+              {errorSignUp ? (
+                <div className="invalid-tooltip">{erroLSignUpMessage}</div>
+              ) : null}
             </div>
-            {error ? <div>{t("userIsExist")}</div> : null}
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"

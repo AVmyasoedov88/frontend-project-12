@@ -1,7 +1,7 @@
 //import React from "react";
 import FormLogin from "./LoginFormik";
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
-import Header from "./Header";
+import HeaderLogin from "./HeaderLogin";
 import "bootstrap/dist/css/bootstrap.min.css";
 import image from "../img/hexlet.jpeg";
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ const Login = () => {
   return (
     
     <Container fluid className="d-flex flex-column vh-100">
-      <Header />
+      <HeaderLogin />
       <Container fluid className="h-100 bg-light">
         <Row className="justify-content-center align-content-center h-100">
           <Col xs="12" md="8" xxl="6">

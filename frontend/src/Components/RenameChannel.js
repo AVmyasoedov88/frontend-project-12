@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const RenameChannel = (props) => {
-  const { renameChannelSocet } = useApiSocet();
+  const { renameChannelSocket } = useApiSocet();
   const { t } = useTranslation();
   const notify = () => toast(t("channelRename"));
 
@@ -24,7 +24,7 @@ const RenameChannel = (props) => {
           }}
           onSubmit={async (values) => {
             try {
-              await renameChannelSocet(values, notify);
+              await renameChannelSocket(values, notify);
               props.onHide();
             } catch (error) {
               toast.error(error);

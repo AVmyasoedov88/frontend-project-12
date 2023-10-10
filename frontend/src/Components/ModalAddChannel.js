@@ -1,6 +1,6 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
-import React, { forwardRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
@@ -8,10 +8,10 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ModalAddChannel = forwardRef((props, ref) => {
-  const { addChannelSocet } = useApiSocet();
+const ModalAddChannel = ((props) => {
+  const { addChannelSocket } = useApiSocet();
   const { t } = useTranslation();
-  const channels = useSelector((state) => state.channelMessage.channels);
+  const channels = useSelector((state) => state.channel.channels);
   const channelsArray = Object.entries(channels).map(
     ([id, { name, removable }]) => name
   );
@@ -31,7 +31,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-              await addChannelSocet(values.channelName, notify);
+              await addChannelSocket(values.channelName, notify);
               props.onHide();
               //toast.success("Wow so easy!");
             } catch (error) {
@@ -57,7 +57,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
 
               <div className="d-flex justify-content-end">
                 <button
-                  ref={ref}
+                 
                   type="button"
                   className="me-2 btn btn-secondary"
                   onClick={props.onHide}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import Channels from "./Channels";
@@ -10,13 +10,10 @@ import FormMessage from "./FormMessage";
 import Header from "./Header";
 import MessageBox from "./MessageBox";
 import { useDispatch } from "react-redux";
-import {
-  addChannels,
-  makeActiveChannel,
-  addMessages,
-} from "../slices/channelMessageSlice";
+import { addChannels, makeActiveChannel } from "../slices/channelSlice";
+import { addMessages, addMessage } from "../slices/messageSlice";
 import ModalAddChannel from "./ModalAddChannel";
-import routes from "../hooks/routes";
+import { requireAuth } from "../routes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -30,11 +27,10 @@ const ChatForm = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const { token } = auth;
       try {
-        const response = await axios.get(routes.dataPath(), {
+        const response = await axios.get(requireAuth.dataPath(), {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${auth.token}`,
           },
         });
 
@@ -59,7 +55,7 @@ const ChatForm = () => {
         <Row className="row h-100 bg-white flex-md-row">
           <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-              <b>Каналы</b>
+              <b>{t("channels")}</b>
               <Button
                 onClick={() => setModalShow(true)}
                 variant="light"

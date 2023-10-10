@@ -7,9 +7,7 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  makeActiveChannel,
-} from "../slices/channelMessageSlice";
+import { makeActiveChannel } from "../slices/channelSlice";
 import useApiSocet from "../hooks/useApi";
 import React, { useState } from "react";
 import RenameChannel from "./RenameChannel";
@@ -20,13 +18,13 @@ import "react-toastify/dist/ReactToastify.css";
 const Channels = () => {
   const dispatch = useDispatch();
   const [renameModalShow, setRenameModalShow] = useState(false);
-  const { deleteChannelSocet } = useApiSocet();
+  const { deleteChannelSocket } = useApiSocet();
   const { t } = useTranslation();
   const notify = () => toast.success(t("deleteChannel"));
 
-  const channels = useSelector((state) => state.channelMessage.channels);
+  const channels = useSelector((state) => state.channel.channels);
   const currentChannelId = useSelector(
-    (state) => state.channelMessage.currentChannelId
+    (state) => state.channel.currentChannelId
   );
 
   const handleClick = (id) => () => {
@@ -55,7 +53,7 @@ const Channels = () => {
               >
                 <Dropdown.Item
                   eventKey="1"
-                  onClick={deleteChannelSocet(id, notify)}
+                  onClick={deleteChannelSocket(id, notify)}
                 >
                   {t("delete")}
                 </Dropdown.Item>

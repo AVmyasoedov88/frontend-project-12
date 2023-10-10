@@ -12,10 +12,10 @@ const FormMessage = () => {
   const { auth } = useAuth();
   const { username } = auth;
   const channelId = useSelector(
-    (state) => state.channelMessage.currentChannelId
+    (state) => state.channel.currentChannelId
   );
 
-  const { addMessageSocet } = useApiSocet();
+  const { addMessageSocket } = useApiSocet();
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -30,7 +30,7 @@ const FormMessage = () => {
             username,
           };
 
-          await addMessageSocet(newValues);
+          await addMessageSocket(newValues);
           actions.resetForm({
             values: {
               newMessage: "",

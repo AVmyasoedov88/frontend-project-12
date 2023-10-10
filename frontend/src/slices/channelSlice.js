@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   channels: {},
   currentChannelId: null,
-  messages: {},
+  
 };
 
 const channelMessageSlice = createSlice({
-  name: "channelMessage",
+  name: "channel",
   initialState,
   reducers: {
     addChannels: (state, { payload }) => {
@@ -22,23 +22,6 @@ const channelMessageSlice = createSlice({
     makeActiveChannel: (state, { payload }) => {
       state.currentChannelId = Number(payload);
     },
-    addMessages: (state, { payload }) => {
-      payload.reduce((res, el) => {
-        const { id, body, username, channelId } = el;
-        res[id] = {
-          id,
-          body,
-          username,
-          channelId,
-        };
-        return res;
-      }, state);
-    },
-
-    addMessage: (state, { payload }) => {
-      const { id, body, username, channelId } = payload;
-      state.messages[id] = { body, username, channelId };
-    },
 
     deleteChannel: (state, { payload }) => {
       // { id: 6 };
@@ -52,6 +35,10 @@ const channelMessageSlice = createSlice({
       const { id, name } = payload;
       state.channels[id] = { ...state.channels[id], name };
     },
+
+    clearChannel: (state) => {
+      state.channels = {}
+    }
   },
 });
 
@@ -59,8 +46,7 @@ export const {
   addChannel,
   addChannels,
   makeActiveChannel,
-  addMessages,
-  addMessage,
+  clearChannel,
   deleteChannel,
   renameChannel,
 } = channelMessageSlice.actions;

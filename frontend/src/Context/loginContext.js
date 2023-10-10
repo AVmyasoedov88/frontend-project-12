@@ -6,7 +6,7 @@ export const LoginProvider = ({ children }) => {
   const token = window.localStorage.getItem("token");
   const username = window.localStorage.getItem("username");
   const [auth, setAuth] = useState({ token, username });
-  const login = (res) => {
+  const logIn = (res) => {
     window.localStorage.setItem("token", res.token);
     window.localStorage.setItem("username", res.username);
     setAuth(res);
@@ -15,10 +15,11 @@ export const LoginProvider = ({ children }) => {
   const logOut = () => {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("username");
-    setAuth({auth: "null"});
-  }
+    //setAuth(null);
+  };
+
   return (
-    <loginContext.Provider value={{ auth, login, logOut }}>
+    <loginContext.Provider value={{ auth, logIn, logOut }}>
       {children}
     </loginContext.Provider>
   );

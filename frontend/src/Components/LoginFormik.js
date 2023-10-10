@@ -1,26 +1,27 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import useAuth from "../hooks/useAuth.js";
-import routes from "../hooks/routes.js";
+import { requireAuth } from "../routes.js";
 import axios from "axios";
-import { errorLogin } from "../slices/errorSlice.js";
+//import { errorLogin } from "../slices/errorSlice.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { loginSchema } from "../Validation/validationSchema";
+import { useState } from "react";
 
 const FormLogin = () => {
-  const { login } = useAuth();
-  //const [error, setError] = useState(false);
-  const error = useSelector((state) => state.errors.errorLogin);
-  console.log(error);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
 
+  const { auth, logIn, logOut } = useAuth();
+  const [errorLogin, setErrorLogin] = useState(false);
+  const erroLoginMessage = t("login.errorLogin");
+
+  const navigate = useNavigate();
+
   return (
     <div>
-      <h1 className="text-center mb-4">Войти</h1>
+      <h1 className="text-center mb-4">{t('enter')}</h1>
       <Formik
         initialValues={{
           username: "",
@@ -29,14 +30,17 @@ const FormLogin = () => {
         validationSchema={loginSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const res = await axios.post(routes.loginPath(), values);
-            login(res.data);
+            const res = await axios.post(requireAuth.loginPath(), values);
+            logIn(res.data);
+
             setSubmitting(false);
             const { from } = location.state || { from: { pathname: "/" } };
             navigate(from);
-            dispatch(errorLogin(null));
           } catch (err) {
-            dispatch(errorLogin(err.code));
+            if (err.isAxiosError || err.response.status === 401) {
+              setErrorLogin(true);
+              return false;
+            }
           }
         }}
       >
@@ -45,13 +49,19 @@ const FormLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder="Ваш ник"
+                placeholder={t('username')}
                 className={`form-control ${
-                  touched.username && errors.username ? "is-invalid" : ""
+                  (touched.username && errors.username) || errorLogin
+                    ? "is-invalid"
+                    : ""
                 }`}
                 required
-                autoComplete="given-name" 
+                autoComplete="given-name"
               />
+              <label className="form-label" htmlFor="username">
+              {t('username')}
+              </label>
+
               <ErrorMessage
                 component="div"
                 name="username"
@@ -64,27 +74,35 @@ const FormLogin = () => {
                 name="password"
                 type="password"
                 required
-                placeholder="Пароль"
+                placeholder={t('password')}
                 className={`form-control ${
-                  touched.password && errors.password ? "is-invalid" : ""
+                  (touched.password && errors.password) || errorLogin
+                    ? "is-invalid"
+                    : ""
                 }`}
                 autoComplete="current-password"
                 wfd-id="id1"
               />
+              <label className="form-label" htmlFor="password">
+              {t('password')}
+              </label>
               <ErrorMessage
                 component="div"
                 name="password"
                 className="invalid-feedback"
               />
+              {errorLogin ? (
+                <div className="invalid-tooltip">{erroLoginMessage}</div>
+              ) : null}
             </div>
-            {error ? <div>{t("errorUsenamePassword")}</div> : null}
+
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
-              //onClick={handleReset}
+             
             >
-              Войти
+              {t('enter')}
             </button>
           </Form>
         )}

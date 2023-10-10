@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+/*import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   getStatusView: false,
@@ -16,4 +16,4 @@ const modalViewSlice = createSlice({
 
 export const { getStatusView } = modalViewSlice.actions;
 
-export default modalViewSlice.reducer;
+export default modalViewSlice.reducer;*/  //не нужен
