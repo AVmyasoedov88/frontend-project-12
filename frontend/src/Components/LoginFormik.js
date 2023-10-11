@@ -91,12 +91,15 @@ const FormLogin = () => {
                 name="password"
                 className="invalid-feedback"
               />
-            {errorLogin ? (
-              <div className="invalid-tooltip" text="Неверные имя пользователя или пароль">{erroLoginMessage}</div>
-            ) : null}
-             
+              {errorLogin ? (
+                <div
+                  className="invalid-tooltip"
+                  htmlFor="password"
+                >
+                  {erroLoginMessage}
+                </div>
+              ) : null}
             </div>
-
 
             <button
               type="submit"
