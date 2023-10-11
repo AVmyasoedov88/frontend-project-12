@@ -54,6 +54,7 @@ const SignUpLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
+                id = "username"
                 placeholder={t("signUp.username")}
                 className={`form-control ${
                   touched.username && errors.username ? "is-invalid" : ""
@@ -76,6 +77,7 @@ const SignUpLogin = () => {
               <Field
                 name="password"
                 type="password"
+                id="password"
                 required
                 placeholder={t("password")}
                 className={`form-control ${
@@ -96,6 +98,7 @@ const SignUpLogin = () => {
             <div className="form-floating mb-4">
               <Field
                 name="confirmPassword"
+                id="confirmPassword"
                 type="password"
                 required
                 placeholder={t("confirmPassword")}
