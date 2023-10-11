@@ -20,8 +20,7 @@ const signUpSchema = Yup.object().shape({
     .max(20, "От 3 до 20 символов")
     .required("Обязательное поле"),
   password: Yup.string()
-    .min(2, "Не менее 6 символов")
-    .max(50, "Максимум 50 букв")
+    .min(6, "Не менее 6 символов")
     .required("Обязательное поле"),
   confirmPassword: Yup.string()
     .required("Обязательное поле")
