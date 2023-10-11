@@ -21,7 +21,7 @@ const FormLogin = () => {
 
   return (
     <div>
-      <h1 className="text-center mb-4">{t('enter')}</h1>
+      <h1 className="text-center mb-4">{t("enter")}</h1>
       <Formik
         initialValues={{
           username: "",
@@ -49,7 +49,7 @@ const FormLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
-                placeholder={t('login.username')}
+                placeholder={t("login.username")}
                 className={`form-control ${
                   (touched.username && errors.username) || errorLogin
                     ? "is-invalid"
@@ -59,7 +59,7 @@ const FormLogin = () => {
                 autoComplete="given-name"
               />
               <label className="form-label" htmlFor="username">
-              {t('login.username')}
+                {t("login.username")}
               </label>
 
               <ErrorMessage
@@ -74,7 +74,7 @@ const FormLogin = () => {
                 name="password"
                 type="password"
                 required
-                placeholder={t('password')}
+                placeholder={t("password")}
                 className={`form-control ${
                   (touched.password && errors.password) || errorLogin
                     ? "is-invalid"
@@ -84,25 +84,26 @@ const FormLogin = () => {
                 wfd-id="id1"
               />
               <label className="form-label" htmlFor="password">
-              {t('password')}
+                {t("password")}
               </label>
               <ErrorMessage
                 component="div"
                 name="password"
                 className="invalid-feedback"
               />
-              {errorLogin ? (
-                <div className="invalid-tooltip">{erroLoginMessage}</div>
-              ) : null}
+            {errorLogin ? (
+              <div className="invalid-tooltip" text="Неверные имя пользователя или пароль">{erroLoginMessage}</div>
+            ) : null}
+             
             </div>
+
 
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
-             
             >
-              {t('enter')}
+              {t("enter")}
             </button>
           </Form>
         )}
