@@ -44,6 +44,7 @@ const FormMessage = () => {
               id="newMessage"
               name="newMessage"
               className="border-0 p-0 ps-2 form-control"
+              aria-label="Новое сообщение"
               placeholder="Введите сообщение..."
             />
 
