@@ -49,6 +49,7 @@ const FormLogin = () => {
             <div className="form-floating mb-3">
               <Field
                 name="username"
+                id="username"
                 placeholder={t("login.username")}
                 className={`form-control ${
                   (touched.username && errors.username) || errorLogin
@@ -73,6 +74,7 @@ const FormLogin = () => {
               <Field
                 name="password"
                 type="password"
+                id="password"
                 required
                 placeholder={t("password")}
                 className={`form-control ${
@@ -92,12 +94,7 @@ const FormLogin = () => {
                 className="invalid-feedback"
               />
               {errorLogin ? (
-                <div
-                  className="invalid-tooltip"
-                  htmlFor="password"
-                >
-                  {erroLoginMessage}
-                </div>
+                <div className="invalid-tooltip">{erroLoginMessage}</div>
               ) : null}
             </div>
 
@@ -116,3 +113,4 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
+
