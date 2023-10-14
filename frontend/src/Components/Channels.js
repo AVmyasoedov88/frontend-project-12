@@ -35,42 +35,45 @@ const Channels = () => {
     <Nav variant="pills" as="ul">
       {Object.entries(channels).map(([id, { name, removable }]) => (
         <Nav.Item key={id} className="nav-item w-100">
-          <ButtonGroup className="d-flex dropdown btn-group" key={id}>
-            <Button
-              variant={Number(id) === currentChannelId ? "secondary" : "light"}
-              className="w-100 rounded-0 text-start text-truncate btn"
-              onClick={handleClick(id)}
-            >
-              <span className="me-1">#</span>
-              {name}
-            </Button>
-            {removable ? (
-              <DropdownButton
+            <Dropdown as={ButtonGroup} className="d-flex dropdown btn-group">
+              <Button
+                variant={
+                  Number(id) === currentChannelId ? "secondary" : "light"
+                }
+                className="w-100 rounded-0 text-start text-truncate btn"
+                onClick={handleClick(id)}
+                >
+                <span className="me-1">#</span>
+                {name}
+              </Button>
+
+              {removable ? (
+              <><Dropdown.Toggle
+                id="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
                 variant="light"
-                as={ButtonGroup}
-                title=""
-                id="bg-vertical-dropdown-1"
               >
-                <Dropdown.Item
-                  eventKey="1"
-                  onClick={deleteChannelSocket(id, notify)}
-                >
-                  {t("delete")}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="2"
-                  onClick={() => setRenameModalShow(true)}
-                >
-                  {t("rename")}
-                </Dropdown.Item>
-                <RenameChannel
-                  show={renameModalShow}
-                  onHide={() => setRenameModalShow(false)}
-                  id={id}
-                />
-              </DropdownButton>
-            ) : null}
-          </ButtonGroup>
+                <label className="visually-hidden">Управление каналом</label>
+              </Dropdown.Toggle><Dropdown.Menu>
+                  <Dropdown.Item
+                    eventKey="1"
+                    onClick={deleteChannelSocket(id, notify)}
+                  >
+                    {t("delete")}
+                  </Dropdown.Item>
+
+                  <Dropdown.Item
+                    eventKey="2"
+                    onClick={() => setRenameModalShow(true)}
+                  >
+                    {t("rename")}
+                  </Dropdown.Item>
+                  <RenameChannel
+                    show={renameModalShow}
+                    onHide={() => setRenameModalShow(false)}
+                    id={id} />
+                </Dropdown.Menu></>
+          ) : null}
+          </Dropdown>
         </Nav.Item>
       ))}
     </Nav>
