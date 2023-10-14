@@ -1,23 +1,24 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Modal } from "react-bootstrap";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import useApiSocet from "../hooks/useApi";
 import { newChannelSchema } from "../Validation/validationSchema";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { forwardRef } from "react";
 
-const ModalAddChannel = ((props) => {
+const ModalAddChannel = forwardRef((props, ref) => {
   const { addChannelSocket } = useApiSocet();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channel.channels);
   const channelsArray = Object.entries(channels).map(
     ([id, { name, removable }]) => name
   );
+  const notify = () => toast.success(t("addChannel"));
 
-  const notify = () => toast.success(t('addChannel'));
-
+ 
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
@@ -33,7 +34,6 @@ const ModalAddChannel = ((props) => {
             try {
               await addChannelSocket(values.channelName, notify);
               props.onHide();
-              //toast.success("Wow so easy!");
             } catch (error) {
               toast.error(error);
             }
@@ -48,6 +48,7 @@ const ModalAddChannel = ((props) => {
                   touched.channelName && errors.channelName ? "is-invalid" : ""
                 } `}
                 required
+                innerRef={ref}
               />
               <ErrorMessage
                 component="div"
@@ -57,12 +58,11 @@ const ModalAddChannel = ((props) => {
 
               <div className="d-flex justify-content-end">
                 <button
-                 
                   type="button"
                   className="me-2 btn btn-secondary"
                   onClick={props.onHide}
                 >
-                 {t('cancel')}
+                  {t("cancel")}
                 </button>
                 <button
                   //onClick={props.onHide}
@@ -72,7 +72,7 @@ const ModalAddChannel = ((props) => {
                     touched.channelName && errors.channelName ? true : false
                   }
                 >
-                  {t('send')}
+                  {t("send")}
                 </button>
               </div>
             </Form>

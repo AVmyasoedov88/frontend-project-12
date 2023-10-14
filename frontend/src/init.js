@@ -21,23 +21,27 @@ import {
 import { addMessages, addMessage } from "./slices/messageSlice";
 import filter from "leo-profanity";
 
+
 const init = async () => {
+  
   const i18n = i18next.createInstance();
   await i18n.use(initReactI18next).init({
     resources,
     fallbackLng: "ru",
   });
   const socket = io("/");
+  
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    environment: "testenv",
+  };
 
   await filter.add(filter.getDictionary("ru"));
 
   socket.on("connect", () => {
     socket.sendBuffer = [];
   });
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    environment: "testenv",
-  };
+  
 
   const addChannelSocket = (channelName, cb) => {
     socket.emit("newChannel", { name: `${channelName}` }, (response) => {

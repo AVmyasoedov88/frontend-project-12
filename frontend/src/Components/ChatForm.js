@@ -1,7 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import Channels from "./Channels";
@@ -22,7 +22,6 @@ const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -48,6 +47,16 @@ const ChatForm = () => {
     fetchData();
   }, [dispatch, auth, t]);
 
+  const inputEl = useRef(null);
+
+ async function handleClick() {
+   await setModalShow(true);
+    console.log(modalShow);
+    if (!modalShow) {
+      inputEl.current.focus();
+    }
+  }
+
   return (
     <Container className="d-flex flex-column h-100">
       <Header />
@@ -57,7 +66,7 @@ const ChatForm = () => {
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
               <b>{t("channels")}</b>
               <Button
-                onClick={() => setModalShow(true)}
+                onClick={handleClick}
                 variant="light"
                 className="p-0 text-primary btn btn-group-vertical"
               >
@@ -77,6 +86,7 @@ const ChatForm = () => {
             <ModalAddChannel
               show={modalShow}
               onHide={() => setModalShow(false)}
+              ref={inputEl}
             />
 
             <Channels />
