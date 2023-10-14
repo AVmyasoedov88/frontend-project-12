@@ -49,9 +49,8 @@ const ChatForm = () => {
 
   const inputEl = useRef(null);
 
- async function handleClick() {
-   await setModalShow(true);
-    console.log(modalShow);
+  async function handleClick() {
+    await setModalShow(true);
     if (!modalShow) {
       inputEl.current.focus();
     }

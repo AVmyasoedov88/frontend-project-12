@@ -18,7 +18,6 @@ const ModalAddChannel = forwardRef((props, ref) => {
   );
   const notify = () => toast.success(t("addChannel"));
 
- 
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
@@ -44,12 +43,13 @@ const ModalAddChannel = forwardRef((props, ref) => {
               <Field
                 id="channelName"
                 name="channelName"
+                type="text"
                 className={`mb-2 form-control ${
                   touched.channelName && errors.channelName ? "is-invalid" : ""
-                } `}
-                required
+                }`}
                 innerRef={ref}
               />
+              <label className="visually-hidden" htmlFor="channelName">Имя канала</label>
               <ErrorMessage
                 component="div"
                 name="channelName"
