@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { makeActiveChannel } from "../slices/channelSlice";
 import useApiSocet from "../hooks/useApi";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import RenameChannel from "./RenameChannel";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -30,6 +30,16 @@ const Channels = () => {
   const handleClick = (id) => () => {
     dispatch(makeActiveChannel(id));
   };
+
+  const inputEl = useRef(null);
+
+  async function click() {
+    await setRenameModalShow(true);
+    console.log(inputEl)
+    if (!renameModalShow) {
+      inputEl.current.focus();
+    }
+  }
 
   return (
     <Nav variant="pills" as="ul">
@@ -63,14 +73,15 @@ const Channels = () => {
 
                   <Dropdown.Item
                     eventKey="2"
-                    onClick={() => setRenameModalShow(true)}
+                    onClick={() => click()}
                   >
                     {t("rename")}
                   </Dropdown.Item>
                   <RenameChannel
                     show={renameModalShow}
                     onHide={() => setRenameModalShow(false)}
-                    id={id} />
+                    id={id}
+                    ref={inputEl} />
                 </Dropdown.Menu></>
           ) : null}
           </Dropdown>
