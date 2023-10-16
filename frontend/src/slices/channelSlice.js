@@ -3,7 +3,6 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const initialState = {
   channels: {},
   currentChannelId: null,
-  
 };
 
 const channelMessageSlice = createSlice({
@@ -20,13 +19,13 @@ const channelMessageSlice = createSlice({
       state.channels[id] = { name, removable };
     },
     makeActiveChannel: (state, { payload }) => {
-      state.currentChannelId = Number(payload);
+      state.currentChannelId = payload;
     },
 
     deleteChannel: (state, { payload }) => {
-      // { id: 6 };
       if (payload.id === state.currentChannelId) {
         state.currentChannelId = 1;
+        console.log(state.currentChannelId);
       }
       delete state.channels[payload.id];
     },
@@ -37,8 +36,8 @@ const channelMessageSlice = createSlice({
     },
 
     clearChannel: (state) => {
-      state.channels = {}
-    }
+      state.channels = {};
+    },
   },
 });
 

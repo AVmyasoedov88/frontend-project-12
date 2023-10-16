@@ -11,10 +11,11 @@ export default {
       username: "Имя пользователя",
     },
     enter: "Войти",
-    
+    areYouSure: "Уверены?",
     password: "Пароль",
     addNewChannel: "Добавить канал",
     delete: "Удалить",
+    channelDelete: 'Удалить канал',
     rename: "Переименовать",
     message: "сообщение",
     error: "Ошибка",

@@ -8,14 +8,12 @@ const ChatHeader = () => {
   );
 
   const channels = useSelector((state) => state.channel.channels);
-
   const countMessages = useSelector(
     (state) =>
       Object.entries(state.message.messages).filter(
         ([id, { channelId }]) => channelId === currentChannelId
       ).length
   );
-
   const activeChannelName =
     Object.keys(channels).length > 0 ? channels[currentChannelId].name : "";
 

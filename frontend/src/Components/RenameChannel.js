@@ -1,5 +1,5 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import React, { useRef, useEffect } from "react";
 import useApiSocet from "../hooks/useApi";
 import { useTranslation } from "react-i18next";
@@ -31,7 +31,6 @@ const RenameChannel = forwardRef((props, ref) => {
           }}
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
-            console.log(values);
             try {
               await renameChannelSocket(values, notify);
               props.onHide();
@@ -45,7 +44,6 @@ const RenameChannel = forwardRef((props, ref) => {
               <Field
                 id="channelName"
                 name="channelName"
-                value={values.channelName}
                 className={`mb-2 form-control ${
                   touched.channelName && errors.channelName ? "is-invalid" : ""
                 }`}
@@ -61,24 +59,24 @@ const RenameChannel = forwardRef((props, ref) => {
               />
 
               <div className="d-flex justify-content-end">
-                <button
+                <Button
                   type="button"
                   className="me-2 btn btn-secondary"
                   onClick={props.onHide}
                 >
                   {t("cancel")}
-                </button>
+                </Button>
 
-                <button
+                <Button
                   type="submit"
                   className="btn btn-primary"
                   disabled={
                     touched.channelName && errors.channelName ? true : false
                   }
-                  //onClick={props.onHide}
+                  
                 >
                   {t("send")}
-                </button>
+                </Button>
               </div>
             </Form>
           )}

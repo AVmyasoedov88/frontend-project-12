@@ -51,7 +51,7 @@ const init = async () => {
     });
   };
 
-  const deleteChannelSocket = (id, cb) => () => {
+  const deleteChannelSocket = (id, cb) =>   {
     socket.emit("removeChannel", { id: `${id}` }, (response) => {
       if (response.status === "ok") {
         cb();
