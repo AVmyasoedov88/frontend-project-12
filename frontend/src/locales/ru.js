@@ -34,7 +34,7 @@ export default {
     unknownErr: "Неизвестная ошибка",
     addChannel: "Канал создан",
     channelRename: "Канал переименован",
-    deleteChannel: "Канал удален",
+    deleteChannel: "Канал удалён",
     channels: "Каналы",
   },
 };
