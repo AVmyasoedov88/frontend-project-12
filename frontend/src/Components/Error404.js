@@ -1,12 +1,10 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 const Error404 = () => {
-    const { t } = useTranslation();
-    return(
+    const { t } = useTranslation()
+    return (
         <>
-        <h1>
-           {t('error')} 404
-        </h1>
+            <h1>{t('error')} 404</h1>
         </>
     )
-} 
-export default Error404;
+}
+export default Error404

@@ -1,5 +1,4 @@
-import ru from "./ru";
-import en from "./en";
+import ru from './ru'
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { en, ru };
+export default { ru }
