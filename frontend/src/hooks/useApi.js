@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
 
-import apiContext from '../Context/ApiContext'
+import apiContext from '../Context/ApiContext';
 
-const useApiSocet = () => useContext(apiContext)
+const useApiSocet = () => useContext(apiContext);
 
-export default useApiSocet
+export default useApiSocet;
