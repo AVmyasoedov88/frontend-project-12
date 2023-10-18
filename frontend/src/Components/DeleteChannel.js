@@ -1,18 +1,12 @@
-/* eslint-disable no-unused-vars */
 import { Modal, Button } from 'react-bootstrap';
 import React from 'react';
 import useApiSocet from '../hooks/useApi';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
 
 const DeleteChannel = (props) => {
   const { deleteChannelSocket } = useApiSocet();
-
-  const currentChannelId = useSelector(
-    (state) => state.channel.currentChannelId
-  );
 
   const { t } = useTranslation();
   const notify = () => toast.success(t('deleteChannel'));
@@ -24,7 +18,7 @@ const DeleteChannel = (props) => {
       toast.error(error);
     }
   };
-  //ПЕРЕДЕЛАТЬ
+
   return (
     <>
       <Modal {...props}>

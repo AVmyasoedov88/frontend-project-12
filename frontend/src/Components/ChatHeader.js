@@ -11,7 +11,7 @@ const ChatHeader = () => {
   const countMessages = useSelector(
     (state) =>
       Object.entries(state.message.messages).filter(
-        ([id, { channelId }]) => channelId === currentChannelId
+        ([{ channelId }]) => channelId === currentChannelId
       ).length
   );
   const activeChannelName =

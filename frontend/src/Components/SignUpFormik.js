@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 const SignUpLogin = () => {
   const { logIn } = useAuth();
-
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
@@ -48,8 +47,7 @@ const SignUpLogin = () => {
               return;
             }
           }
-        }}
-      >
+        }}>
         {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">

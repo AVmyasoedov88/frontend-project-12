@@ -14,9 +14,7 @@ const RenameChannel = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const notify = () => toast(t('channelRename'));
   const channels = useSelector((state) => state.channel.channels);
-  const channelsArray = Object.entries(channels).map(
-    ([id, { name, removable }]) => name
-  );
+  const channelsArray = Object.entries(channels).map(([{ name }]) => name);
 
   return (
     <Modal {...props}>
@@ -37,8 +35,7 @@ const RenameChannel = forwardRef((props, ref) => {
             } catch (error) {
               toast.error(error);
             }
-          }}
-        >
+          }}>
           {({ errors, touched, values, handleChange }) => (
             <Form>
               <Field
@@ -62,8 +59,7 @@ const RenameChannel = forwardRef((props, ref) => {
                 <Button
                   type="button"
                   className="me-2 btn btn-secondary"
-                  onClick={props.onHide}
-                >
+                  onClick={props.onHide}>
                   {t('cancel')}
                 </Button>
 
@@ -72,8 +68,7 @@ const RenameChannel = forwardRef((props, ref) => {
                   className="btn btn-primary"
                   disabled={
                     touched.channelName && errors.channelName ? true : false
-                  }
-                >
+                  }>
                   {t('send')}
                 </Button>
               </div>

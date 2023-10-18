@@ -1,12 +1,12 @@
 import { Button, ButtonGroup, Dropdown, Nav } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { makeActiveChannel } from '../slices/channelSlice';
 import React, { useState, useRef } from 'react';
 import RenameChannel from './RenameChannel';
 import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 import DeleteChannel from './DeleteChannel';
+
 const Channels = () => {
   const dispatch = useDispatch();
   const [renameModalShow, setRenameModalShow] = useState(false);
@@ -42,8 +42,7 @@ const Channels = () => {
             <Button
               variant={id === currentChannelId ? 'secondary' : 'light'}
               className="w-100 rounded-0 text-start text-truncate btn"
-              onClick={handleClick(id)}
-            >
+              onClick={handleClick(id)}>
               <span className="me-1">#</span>
               {name}
             </Button>
@@ -52,16 +51,14 @@ const Channels = () => {
               <>
                 <Dropdown.Toggle
                   id="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
-                  variant="light"
-                >
+                  variant="light">
                   <label className="visually-hidden">Управление каналом</label>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item
                     eventKey="1"
                     className="btn btn-danger"
-                    onClick={() => setDeleteChannel(true)}
-                  >
+                    onClick={() => setDeleteChannel(true)}>
                     {t('delete')}
                   </Dropdown.Item>
                   <DeleteChannel

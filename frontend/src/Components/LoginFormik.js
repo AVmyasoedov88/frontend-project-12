@@ -42,8 +42,7 @@ const FormLogin = () => {
               return false;
             }
           }
-        }}
-      >
+        }}>
         {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">
@@ -101,8 +100,7 @@ const FormLogin = () => {
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
-              disabled={isSubmitting}
-            >
+              disabled={isSubmitting}>
               {t('enter')}
             </button>
           </Form>

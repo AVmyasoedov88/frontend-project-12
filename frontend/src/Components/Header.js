@@ -17,8 +17,7 @@ const Header = () => {
   return (
     <Navbar
       expand="lg"
-      className="shadow-sm navbar navbar-expand-lg navbar-light bg-white"
-    >
+      className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <Container>
         <Navbar.Brand href="/login">Hexlet Chat</Navbar.Brand>
 
@@ -27,8 +26,7 @@ const Header = () => {
           onClick={() => [logOut(), dispatch(clearChannel())]}
           as={Link}
           to="/login"
-          state={{ from: location }}
-        >
+          state={{ from: location }}>
           {t('exit')}
         </Button>
       </Container>

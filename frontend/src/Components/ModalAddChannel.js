@@ -14,7 +14,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channel.channels);
   const channelsArray = Object.entries(channels).map(
-    ([id, { name, removable }]) => name
+    ([{ name }]) => name
   );
   const notify = () => toast.success(t('addChannel'));
 
@@ -36,8 +36,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
             } catch (error) {
               toast.error(error);
             }
-          }}
-        >
+          }}>
           {({ errors, touched }) => (
             <Form>
               <Field
@@ -62,8 +61,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
                 <button
                   type="button"
                   className="me-2 btn btn-secondary"
-                  onClick={props.onHide}
-                >
+                  onClick={props.onHide}>
                   {t('cancel')}
                 </button>
                 <button
@@ -72,8 +70,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
                   className="btn btn-primary"
                   disabled={
                     touched.channelName && errors.channelName ? true : false
-                  }
-                >
+                  }>
                   {t('send')}
                 </button>
               </div>

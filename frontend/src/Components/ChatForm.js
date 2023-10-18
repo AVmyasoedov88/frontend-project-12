@@ -1,6 +1,5 @@
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import React, { useEffect, useState, useRef } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
@@ -93,9 +92,11 @@ const ChatForm = () => {
           </Col>
 
           <Col className="col p-0 h-100">
-            <ChatHeader />
-            <MessageBox />
-            <FormMessage />
+            <Container className="d-flex flex-column h-100">
+              <ChatHeader />
+              <MessageBox />
+              <FormMessage />
+            </Container>
           </Col>
         </Row>
       </Container>
