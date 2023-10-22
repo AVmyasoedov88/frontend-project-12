@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
-
 import Error404 from './Components/Error404';
 import { ToastContainer } from 'react-toastify';
 import { useLocation, Navigate } from 'react-router-dom';

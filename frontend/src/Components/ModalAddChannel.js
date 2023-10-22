@@ -13,9 +13,7 @@ const ModalAddChannel = forwardRef((props, ref) => {
   const { addChannelSocket } = useApiSocet();
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channel.channels);
-  const channelsArray = Object.entries(channels).map(
-    ([{ name }]) => name
-  );
+  const channelsArray = Object.entries(channels).map(([{ name }]) => name);
   const notify = () => toast.success(t('addChannel'));
 
   return (

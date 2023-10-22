@@ -1,23 +1,28 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true,
         "es2021": true
     },
     "extends": [
+        "eslint:recommended",
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "prettier"
     ],
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 13
+        "ecmaVersion": 13,
+        "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "object-curly-newline": ["error", {
             "ObjectExpression": "always",
             "ObjectPattern": { "multiline": true },
@@ -31,13 +36,13 @@
             "exports": "always",
             "functions": "always"
         }],
-        "react/jsx-closing-bracket-location": "enabled" ,
+        "react/jsx-closing-bracket-location": 0,
         "sort-imports": ["error", {
             "ignoreCase": true,
             "ignoreDeclarationSort": true,
             "ignoreMemberSort": true,
             "memberSyntaxSortOrder": ["all"],
             "allowSeparatedGroups": false
-        }]  
+        }]
     }
 }

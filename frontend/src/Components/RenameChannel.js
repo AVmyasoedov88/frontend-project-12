@@ -36,7 +36,7 @@ const RenameChannel = forwardRef((props, ref) => {
               toast.error(error);
             }
           }}>
-          {({ errors, touched, values, handleChange }) => (
+          {({ errors, touched }) => (
             <Form>
               <Field
                 id="channelName"
