@@ -58,7 +58,9 @@ function Channels() {
                   variant="light"
                   id="channel"
                 >
-                  <label className="visually-hidden" htmlFor="channel">Управление каналом</label>
+                  <label className="visually-hidden" htmlFor="channel">
+                    Управление каналом
+                  </label>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item
