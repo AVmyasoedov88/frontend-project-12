@@ -1,16 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { initReactI18next } from 'react-i18next';
+import i18next from 'i18next';
+import { io } from 'socket.io-client';
+import { Provider } from 'react-redux';
+import filter from 'leo-profanity';
 import App from './App';
 import './index.css';
 import { LoginProvider } from './Context/loginContext';
 import ApiProvider from './Context/ApiContext';
-import { Provider } from 'react-redux';
-import store from './store/index.js';
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import resources from './locales/index.js';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import { io } from 'socket.io-client';
+import store from './store/index';
+import resources from './locales/index';
 import {
   addChannel,
   makeActiveChannel,
@@ -18,7 +19,6 @@ import {
   renameChannel,
 } from './slices/channelSlice';
 import { addMessage } from './slices/messageSlice';
-import filter from 'leo-profanity';
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -66,14 +66,14 @@ const init = async () => {
         if (response.status === 'ok') {
           cb();
         }
-      }
+      },
     );
   };
 
   const addMessageSocket = ({ body, channelId, username }) => {
     socket.emitWithAck('newMessage', {
       body: `${body}`,
-      channelId: channelId,
+      channelId,
       username: `${username}`,
     });
   };
@@ -93,7 +93,6 @@ const init = async () => {
   });
 
   socket.on('newMessage', (payload) => {
-    console.log(payload);
     store.dispatch(addMessage(payload));
   });
 

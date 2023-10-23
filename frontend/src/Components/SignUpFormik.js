@@ -1,14 +1,15 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import React from 'react';
-import useAuth from '../hooks/useAuth.js';
-import { requireAuth } from '../routes.js';
+import {
+  Field, Form, Formik, ErrorMessage,
+} from 'formik';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { requireAuth } from '../routes';
+import useAuth from '../hooks/useAuth';
 import { signUpSchema } from '../Validation/validationSchema';
-import { useState } from 'react';
 
-const SignUpLogin = () => {
+function SignUpLogin() {
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +34,7 @@ const SignUpLogin = () => {
               username,
               password,
             });
-            console.log(res.data);
+
             logIn(res.data);
             setSubmitting(false);
             const { from } = location.state || {
@@ -42,12 +43,11 @@ const SignUpLogin = () => {
             navigate(from);
           } catch (err) {
             if (err.isAxiosError && err.response.status === 401) {
-              console.log(err);
               setErrorSignUp(true);
-              return;
             }
           }
-        }}>
+        }}
+      >
         {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">
@@ -125,7 +125,7 @@ const SignUpLogin = () => {
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
-              //onClick={handleReset}
+              // onClick={handleReset}
             >
               {t('makeRegistration')}
             </button>
@@ -134,6 +134,6 @@ const SignUpLogin = () => {
       </Formik>
     </div>
   );
-};
+}
 
 export default SignUpLogin;

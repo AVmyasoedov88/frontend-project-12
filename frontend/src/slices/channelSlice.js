@@ -1,4 +1,4 @@
-disab
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -26,7 +26,6 @@ const channelMessageSlice = createSlice({
     deleteChannel: (state, { payload }) => {
       if (payload.id === state.currentChannelId) {
         state.currentChannelId = 1;
-        console.log(state.currentChannelId);
       }
       delete state.channels[payload.id];
     },

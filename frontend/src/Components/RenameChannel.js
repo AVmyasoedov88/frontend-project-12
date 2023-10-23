@@ -1,13 +1,16 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import {
+  Field, Form, Formik, ErrorMessage,
+} from 'formik';
 import { Modal, Button } from 'react-bootstrap';
-import React from 'react';
-import useApiSocet from '../hooks/useApi';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
+import useApiSocet from '../hooks/useApi';
 import { newChannelSchema } from '../Validation/validationSchema';
-import { forwardRef } from 'react';
 
 const RenameChannel = forwardRef((props, ref) => {
   const { renameChannelSocket } = useApiSocet();
@@ -35,7 +38,8 @@ const RenameChannel = forwardRef((props, ref) => {
             } catch (error) {
               toast.error(error);
             }
-          }}>
+          }}
+        >
           {({ errors, touched }) => (
             <Form>
               <Field
@@ -59,16 +63,16 @@ const RenameChannel = forwardRef((props, ref) => {
                 <Button
                   type="button"
                   className="me-2 btn btn-secondary"
-                  onClick={props.onHide}>
+                  onClick={props.onHide}
+                >
                   {t('cancel')}
                 </Button>
 
                 <Button
                   type="submit"
                   className="btn btn-primary"
-                  disabled={
-                    touched.channelName && errors.channelName ? true : false
-                  }>
+                  disabled={!!(touched.channelName && errors.channelName)}
+                >
                   {t('send')}
                 </Button>
               </div>

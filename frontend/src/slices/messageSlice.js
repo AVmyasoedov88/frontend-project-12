@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -9,13 +10,17 @@ const messageSlice = createSlice({
   initialState,
   reducers: {
     addMessages: (state, { payload }) => {
-      payload.forEach(({ id, body, username, channelId }) => {
+      payload.forEach(({
+        id, body, username, channelId,
+      }) => {
         state.messages[id] = { body, username, channelId };
       });
     },
 
     addMessage: (state, { payload }) => {
-      const { id, body, username, channelId } = payload;
+      const {
+        id, body, username, channelId,
+      } = payload;
       state.messages[id] = { body, username, channelId };
     },
   },

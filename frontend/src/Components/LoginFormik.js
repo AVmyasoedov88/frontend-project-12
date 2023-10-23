@@ -1,13 +1,16 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import useAuth from '../hooks/useAuth.js';
-import { requireAuth } from '../routes.js';
+/* eslint-disable consistent-return */
+import {
+  Field, Form, Formik, ErrorMessage,
+} from 'formik';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { loginSchema } from '../Validation/validationSchema';
 import { useState } from 'react';
+import { loginSchema } from '../Validation/validationSchema';
+import { requireAuth } from '../routes';
+import useAuth from '../hooks/useAuth';
 
-const FormLogin = () => {
+function FormLogin() {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -42,7 +45,8 @@ const FormLogin = () => {
               return false;
             }
           }
-        }}>
+        }}
+      >
         {({ errors, touched, isSubmitting }) => (
           <Form>
             <div className="form-floating mb-3">
@@ -100,7 +104,8 @@ const FormLogin = () => {
             <button
               type="submit"
               className="w-100 mb-3 btn btn-outline-primary"
-              disabled={isSubmitting}>
+              disabled={isSubmitting}
+            >
               {t('enter')}
             </button>
           </Form>
@@ -108,6 +113,6 @@ const FormLogin = () => {
       </Formik>
     </div>
   );
-};
+}
 
 export default FormLogin;

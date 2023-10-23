@@ -1,12 +1,14 @@
-//import React from "react";
+// import React from "react";
+import {
+  Container, Row, Col, Card, Image,
+} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import FormLogin from './LoginFormik';
-import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 import HeaderLogin from './HeaderLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../img/hexlet.jpeg';
-import { useTranslation } from 'react-i18next';
 
-const Login = () => {
+function Login() {
   const { t } = useTranslation();
 
   return (
@@ -20,7 +22,8 @@ const Login = () => {
                 <Col
                   xs="12"
                   md="6"
-                  className="d-flex align-items-center justify-content-center">
+                  className="d-flex align-items-center justify-content-center"
+                >
                   <Image src={image} roundedCircle />
                 </Col>
                 <div className="col-12 col-md-6 mt-3 mt-mb-0">
@@ -37,6 +40,6 @@ const Login = () => {
       </Container>
     </Container>
   );
-};
+}
 
 export default Login;

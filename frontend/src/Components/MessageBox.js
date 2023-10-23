@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-one-expression-per-line */
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 import React from 'react';
 
-const MessageBox = () => {
+function MessageBox() {
   const currentChannelId = useSelector(
-    (state) => state.channel.currentChannelId
+    (state) => state.channel.currentChannelId,
   );
 
   const messages = useSelector((state) => state.message.messages);
@@ -21,5 +23,5 @@ const MessageBox = () => {
         ))}
     </div>
   );
-};
+}
 export default MessageBox;

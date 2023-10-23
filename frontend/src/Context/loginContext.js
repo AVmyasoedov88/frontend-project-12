@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useState } from 'react';
 
 const loginContext = createContext({});
 
-export const LoginProvider = ({ children }) => {
+export function LoginProvider({ children }) {
   const token = window.localStorage.getItem('token');
   const username = window.localStorage.getItem('username');
   const [auth, setAuth] = useState({ token, username });
@@ -22,6 +23,6 @@ export const LoginProvider = ({ children }) => {
       {children}
     </loginContext.Provider>
   );
-};
+}
 
 export default loginContext;

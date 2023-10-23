@@ -1,10 +1,12 @@
-import { Container, Row, Col, Card, Image } from 'react-bootstrap';
+import {
+  Container, Row, Col, Card, Image,
+} from 'react-bootstrap';
 import Header from './Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../img/signUpImg.jpeg';
 import SignUpLogin from './SignUpFormik';
 
-const SignUp = () => {
+function SignUp() {
   return (
     <Container fluid className="d-flex flex-column vh-100">
       <Header />
@@ -16,7 +18,8 @@ const SignUp = () => {
                 <Col
                   xs="12"
                   md="6"
-                  className="d-flex align-items-center justify-content-center">
+                  className="d-flex align-items-center justify-content-center"
+                >
                   <Image src={image} roundedCircle />
                 </Col>
                 <div className="col-12 col-md-6 mt-3 mt-mb-0">
@@ -29,6 +32,6 @@ const SignUp = () => {
       </Container>
     </Container>
   );
-};
+}
 
 export default SignUp;
