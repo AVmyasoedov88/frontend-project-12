@@ -10,10 +10,9 @@ import { loginSchema } from '../Validation/validationSchema';
 import { requireAuth } from '../routes';
 import useAuth from '../hooks/useAuth';
 
-function FormLogin() {
+const FormLogin = () => {
   const location = useLocation();
   const { t } = useTranslation();
-
   const { logIn } = useAuth();
   const [errorLogin, setErrorLogin] = useState(false);
   const erroLoginMessage = t('login.errorLogin');
@@ -113,6 +112,6 @@ function FormLogin() {
       </Formik>
     </div>
   );
-}
+};
 
 export default FormLogin;

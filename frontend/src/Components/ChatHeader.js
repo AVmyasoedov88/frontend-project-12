@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-function ChatHeader() {
+const ChatHeader = () => {
   const { t } = useTranslation();
   const currentChannelId = useSelector(
     (state) => state.channel.currentChannelId,
@@ -29,6 +29,6 @@ function ChatHeader() {
       </span>
     </div>
   );
-}
+};
 
 export default ChatHeader;

@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { StrictMode } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,13 +17,13 @@ import useAuth from './hooks/useAuth';
 import { paths } from './routes';
 import ChatForm from './Components/ChatForm';
 
-function PrivateRoute({ children }) {
+const PrivateRoute = ({ children }) => {
   const { auth } = useAuth();
   const location = useLocation();
   return auth ? children : <Navigate to="/login" state={{ from: location }} />;
-}
+};
 
-function App() {
+const App = () => {
   <StrictMode>
     <BrowserRouter>
       <Routes>
@@ -42,6 +42,6 @@ function App() {
       <ToastContainer />
     </BrowserRouter>
   </StrictMode>;
-}
+};
 
 export default App;

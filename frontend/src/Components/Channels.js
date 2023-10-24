@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import {
   Button, ButtonGroup, Dropdown, Nav,
@@ -10,7 +11,7 @@ import RenameChannel from './RenameChannel';
 import 'react-toastify/dist/ReactToastify.css';
 import DeleteChannel from './DeleteChannel';
 
-function Channels() {
+const Channels = () => {
   const dispatch = useDispatch();
   const [renameModalShow, setRenameModalShow] = useState(false);
   const [showDeleteChannel, setDeleteChannel] = useState(false);
@@ -93,6 +94,6 @@ function Channels() {
       ))}
     </Nav>
   );
-}
+};
 
 export default Channels;

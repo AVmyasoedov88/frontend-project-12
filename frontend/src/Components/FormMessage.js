@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import useApiSocet from '../hooks/useApi';
 
-function FormMessage() {
+const FormMessage = () => {
   const { t } = useTranslation();
   const { auth } = useAuth();
   const { username } = auth;
@@ -68,5 +68,5 @@ function FormMessage() {
       </Formik>
     </div>
   );
-}
+};
 export default FormMessage;

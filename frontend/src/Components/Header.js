@@ -7,10 +7,9 @@ import { useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth';
 import { clearChannel } from '../slices/channelSlice';
 
-function Header() {
+const Header = () => {
   const { t } = useTranslation();
   const { logOut } = useAuth();
-  // const { token } = auth;
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -34,6 +33,6 @@ function Header() {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Header;

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 import React from 'react';
 
-function MessageBox() {
+const MessageBox = () => {
   const currentChannelId = useSelector(
     (state) => state.channel.currentChannelId,
   );
@@ -23,5 +23,5 @@ function MessageBox() {
         ))}
     </div>
   );
-}
+};
 export default MessageBox;

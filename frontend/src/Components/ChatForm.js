@@ -20,7 +20,7 @@ import ModalAddChannel from './ModalAddChannel';
 import { requireAuth } from '../routes';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ChatForm() {
+const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -105,6 +105,6 @@ function ChatForm() {
       </Container>
     </Container>
   );
-}
+};
 
 export default ChatForm;

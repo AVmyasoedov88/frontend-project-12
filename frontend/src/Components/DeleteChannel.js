@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import useApiSocet from '../hooks/useApi';
 import 'react-toastify/dist/ReactToastify.css';
 
-function DeleteChannel(props) {
+const DeleteChannel = (props) => {
   const { deleteChannelSocket } = useApiSocet();
   const { t } = useTranslation();
   const notify = () => toast.success(t('deleteChannel'));
@@ -37,6 +37,6 @@ function DeleteChannel(props) {
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default DeleteChannel;

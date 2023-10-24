@@ -8,7 +8,7 @@ import HeaderLogin from './HeaderLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../img/hexlet.jpeg';
 
-function Login() {
+const Login = () => {
   const { t } = useTranslation();
 
   return (
@@ -40,6 +40,6 @@ function Login() {
       </Container>
     </Container>
   );
-}
+};
 
 export default Login;

@@ -9,7 +9,7 @@ import { requireAuth } from '../routes';
 import useAuth from '../hooks/useAuth';
 import { signUpSchema } from '../Validation/validationSchema';
 
-function SignUpLogin() {
+const SignUpLogin = () => {
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -134,6 +134,6 @@ function SignUpLogin() {
       </Formik>
     </div>
   );
-}
+};
 
 export default SignUpLogin;
