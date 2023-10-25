@@ -1,9 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable-next-line react/display-name  */
-import {
-  Field, Form, Formik, ErrorMessage,
-} from 'formik';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Modal } from 'react-bootstrap';
 import React, { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
