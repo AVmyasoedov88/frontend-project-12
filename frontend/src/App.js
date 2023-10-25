@@ -23,7 +23,7 @@ const PrivateRoute = ({ children }) => {
   return auth ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
-const App = () => {
+const App = () => (
   <StrictMode>
     <BrowserRouter>
       <Routes>
@@ -32,16 +32,16 @@ const App = () => {
         <Route path="*" element={<Error404 />} />
         <Route
           path={paths.privatePage()}
-          element={(
+          element={
             <PrivateRoute>
               <ChatForm />
             </PrivateRoute>
-          )}
+            }
         />
       </Routes>
       <ToastContainer />
     </BrowserRouter>
-  </StrictMode>;
-};
+  </StrictMode>
+);
 
 export default App;
