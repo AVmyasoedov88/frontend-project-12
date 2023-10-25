@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 
 const loginContext = createContext({});
 
-export function LoginProvider({ children }) {
+export const LoginProvider = ({ children }) => {
   const token = window.localStorage.getItem('token');
   const username = window.localStorage.getItem('username');
   const [auth, setAuth] = useState({ token, username });
@@ -23,6 +23,6 @@ export function LoginProvider({ children }) {
       {children}
     </loginContext.Provider>
   );
-}
+};
 
 export default loginContext;
