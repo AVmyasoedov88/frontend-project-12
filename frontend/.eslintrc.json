@@ -21,8 +21,6 @@
     "react/prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": "off",
-    "react/display-name": [
-      { "ignoreTranspilerName": false, "checkContextObjects": false }
-    ]
+    "react/display-name": 0
   }
 }
