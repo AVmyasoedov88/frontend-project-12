@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable-next-line react/display-name  */
+/* eslint-disable react/display-name */
 import {
   Field, Form, Formik, ErrorMessage,
 } from 'formik';
