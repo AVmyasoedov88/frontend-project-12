@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-no-bind */
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';

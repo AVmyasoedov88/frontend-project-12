@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable consistent-return */
 import {
   Field, Form, Formik, ErrorMessage,

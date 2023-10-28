@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import {
   Container, Row, Col, Card, Image,
 } from 'react-bootstrap';

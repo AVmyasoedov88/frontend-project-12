@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 

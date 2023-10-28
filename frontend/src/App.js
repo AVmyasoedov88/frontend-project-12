@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { StrictMode } from 'react';
 import './App.css';

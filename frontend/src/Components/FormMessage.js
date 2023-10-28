@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import { Field, Form, Formik } from 'formik';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';

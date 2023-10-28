@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import { useTranslation } from 'react-i18next';
 
 const Error404 = () => {
