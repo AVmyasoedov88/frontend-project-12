@@ -10,33 +10,39 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useApiSocet from '../hooks/useApi';
 import { newChannelSchema } from '../Validation/validationSchema';
+import { hideModal } from '../slices/modalSlice';
 
-const RenameChannel = forwardRef((props, ref) => {
-  const { renameChannelSocket } = useApiSocet();
+const RenameChannel = forwardRef(() => {
+  const { renameNewChannel } = useApiSocet();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const notify = () => toast(t('channelRename'));
   const channels = useSelector((state) => state.channel.channels);
   const channelsArray = Object.entries(channels).map(([{ name }]) => name);
+  const id = useSelector((state) => state.modals.renameChannel);
+  const onHide = () => {
+    dispatch(hideModal('renameChannel'));
+  };
 
   return (
-    <Modal {...props}>
-      <Modal.Header closeButton>
+    <Modal centered show>
+      <Modal.Header closeButton onClick={onHide}>
         <Modal.Title>{t('renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{
             channelName: '',
-            id: props.id,
+            id,
           }}
           validationSchema={newChannelSchema(channelsArray)}
           onSubmit={async (values) => {
             try {
-              await renameChannelSocket(values, notify);
-              props.onHide();
+              await renameNewChannel(values, notify);
+              onHide();
             } catch (error) {
               toast.error(error);
             }
@@ -50,7 +56,7 @@ const RenameChannel = forwardRef((props, ref) => {
                 className={`mb-2 form-control ${
                   touched.channelName && errors.channelName ? 'is-invalid' : ''
                 }`}
-                innerRef={ref}
+               // innerRef={ref}
               />
               <label className="visually-hidden" htmlFor="channelName">
                 Имя канала
@@ -65,7 +71,7 @@ const RenameChannel = forwardRef((props, ref) => {
                 <Button
                   type="button"
                   className="me-2 btn btn-secondary"
-                  onClick={props.onHide}
+                  onClick={onHide}
                 >
                   {t('cancel')}
                 </Button>

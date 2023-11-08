@@ -2,13 +2,14 @@
 /* eslint-disable react/jsx-no-bind */
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Channels from './Channels';
 import ChatHeader from './ChatHeader';
@@ -20,13 +21,17 @@ import { addMessages } from '../slices/messageSlice';
 import ModalAddChannel from './ModalAddChannel';
 import { requireAuth } from '../routes';
 import 'react-toastify/dist/ReactToastify.css';
+import { showModal } from '../slices/modalSlice';
+import ModalRenameChannel from './ModalRenameChannel';
+import ModalDeleteChannel from './ModalDeleteChannel';
 
 const ChatForm = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
-  const [modalShow, setModalShow] = useState(false);
+  const modals = useSelector((state) => state.modals);
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     async function fetchData() {
       try {
@@ -40,35 +45,36 @@ const ChatForm = () => {
         dispatch(addChannels(response.data.channels));
         dispatch(addMessages(response.data.messages));
       } catch (error) {
-        if (!error.isAxiosError) {
-          toast.error(t('unknownErr'));
+        const { isAxiosError, response: { status } } = error;
+        if (isAxiosError && status === 401) {
+          toast.error(t('errBadRequest'));
+          const { from } = location.state || {
+            from: { pathname: '/' },
+          };
+          navigate(from);
         }
-        toast.error(t('errBadRequest'));
+        toast.error(t('unknownErr'));
       }
     }
 
     fetchData();
   }, [dispatch, auth, t]);
 
-  const inputEl = useRef(null);
-
-  async function handleClick() {
-    await setModalShow(true);
-    if (!modalShow) {
-      inputEl.current.focus();
-    }
-  }
+  const onClick = () => {
+    dispatch(showModal('newChannel'));
+  };
 
   return (
-    <Container className="d-flex flex-column h-100">
+    <Container className="vh-100 d-flex flex-column" fluid>
       <Header />
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-        <Row className="row h-100 bg-white flex-md-row">
+      <Container bg="light" className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row bg="light" variant="light" className="h-100 flex-md-row">
           <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
               <b>{t('channels')}</b>
               <Button
-                onClick={handleClick}
+                type="button"
+                onClick={onClick}
                 variant="light"
                 className="p-0 text-primary btn btn-group-vertical"
               >
@@ -86,12 +92,6 @@ const ChatForm = () => {
               </Button>
             </div>
 
-            <ModalAddChannel
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-              ref={inputEl}
-            />
-
             <Channels />
           </Col>
 
@@ -104,6 +104,9 @@ const ChatForm = () => {
           </Col>
         </Row>
       </Container>
+      {modals.newChannel ? <ModalAddChannel /> : null}
+      {modals.renameChannel ? <ModalRenameChannel /> : null}
+      {modals.deleteChannel ? <ModalDeleteChannel /> : null}
     </Container>
   );
 };

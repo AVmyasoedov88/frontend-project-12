@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import { io } from 'socket.io-client';
 import { Provider } from 'react-redux';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
 import App from './App';
 import './index.css';
 import { LoginProvider } from './Context/loginContext';
@@ -39,15 +40,17 @@ const init = async () => {
     socket.sendBuffer = [];
   });
 
-  const addChannelSocket = (channelName, cb) => {
+  const createNewChannel = (channelName, cb, closeFunc) => {
     socket.emit('newChannel', { name: `${channelName}` }, (response) => {
       if (response.status === 'ok') {
         cb();
       }
+      toast.error();
     });
+    closeFunc();
   };
 
-  const deleteChannelSocket = (id, cb) => {
+  const deleteNewChannel = (id, cb) => {
     socket.emit('removeChannel', { id: `${id}` }, (response) => {
       if (response.status === 'ok') {
         cb();
@@ -55,7 +58,7 @@ const init = async () => {
     });
   };
 
-  const renameChannelSocket = ({ id, channelName }, cb) => {
+  const renameNewChannel = ({ id, channelName }, cb) => {
     socket.emit(
       'renameChannel',
       {
@@ -70,7 +73,7 @@ const init = async () => {
     );
   };
 
-  const addMessageSocket = ({ body, channelId, username }) => {
+  const addNewMessage = ({ body, channelId, username }) => {
     socket.emitWithAck('newMessage', {
       body: `${body}`,
       channelId,
@@ -104,10 +107,10 @@ const init = async () => {
             <Provider store={store}>
               <ApiProvider.Provider
                 value={{
-                  addChannelSocket,
-                  deleteChannelSocket,
-                  renameChannelSocket,
-                  addMessageSocket,
+                  createNewChannel,
+                  deleteNewChannel,
+                  renameNewChannel,
+                  addNewMessage,
                 }}
               >
                 <App />

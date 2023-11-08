@@ -1,21 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeActiveChannel } from '../slices/channelSlice';
-import RenameChannel from './RenameChannel';
+// import ModalRenameChannel from './ModalRenameChannel';
 import 'react-toastify/dist/ReactToastify.css';
-import DeleteChannel from './DeleteChannel';
+import { showRenameChannel, showDeleteChannel } from '../slices/modalSlice';
 
 const Channels = () => {
   const dispatch = useDispatch();
-  const [renameModalShow, setRenameModalShow] = useState(false);
-  const [showDeleteChannel, setDeleteChannel] = useState(false);
-
+  // const modals = useSelector((state) => state.modals);
   const { t } = useTranslation();
 
   const channels = useSelector((state) => state.channel.channels);
@@ -28,24 +28,22 @@ const Channels = () => {
     dispatch(makeActiveChannel(id));
   };
 
-  const inputEl = useRef(null);
+  const onRenameChannel = (id) => () => {
+    dispatch(showRenameChannel(id));
+  };
 
-  async function click() {
-    await setRenameModalShow(true);
-
-    if (!renameModalShow) {
-      inputEl.current.focus();
-    }
-  }
+  const onDeleteChannel = (id) => () => {
+    dispatch(showDeleteChannel(id));
+  };
 
   return (
-    <Nav variant="pills" as="ul">
+    <Nav variant="pills" as="ul" align="start" className="overflow-auto">
       {Object.entries(channels).map(([id, { name, removable }]) => (
-        <Nav.Item key={id} className="nav-item w-100">
-          <Dropdown as={ButtonGroup} className="d-flex dropdown btn-group">
+        <Nav.Item key={id} as="li" className="w-100">
+          <Dropdown as={ButtonGroup} className="d-flex" align="start">
             <Button
-              variant={id === currentChannelId ? 'secondary' : 'light'}
-              className="w-100 rounded-0 text-start text-truncate btn"
+              variant={+id === +currentChannelId ? 'secondary' : 'light'}
+              className="w-100 rounded-0 text-start text-truncate"
               onClick={handleClick(id)}
             >
               <span className="me-1">#</span>
@@ -55,37 +53,24 @@ const Channels = () => {
             {removable ? (
               <>
                 <Dropdown.Toggle
-                  className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
-                  variant="light"
+                  // className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
                   id="channel"
+                  // className="w-100 rounded-0 text-start text-truncate"
+                  variant={+id === +currentChannelId ? 'secondary' : 'light'}
+                  split
                 >
                   <label className="visually-hidden" htmlFor="channel">
                     Управление каналом
                   </label>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    eventKey="1"
-                    className="btn btn-danger"
-                    onClick={() => setDeleteChannel(true)}
-                  >
+                  <Dropdown.Item eventKey="1" className="btn btn-danger" onClick={onDeleteChannel(id)}>
                     {t('delete')}
                   </Dropdown.Item>
-                  <DeleteChannel
-                    show={showDeleteChannel}
-                    id={id}
-                    onHide={() => setDeleteChannel(false)}
-                  />
 
-                  <Dropdown.Item eventKey="2" onClick={() => click()}>
+                  <Dropdown.Item eventKey="2" onClick={onRenameChannel(id)}>
                     {t('rename')}
                   </Dropdown.Item>
-                  <RenameChannel
-                    show={renameModalShow}
-                    onHide={() => setRenameModalShow(false)}
-                    id={id}
-                    ref={inputEl}
-                  />
                 </Dropdown.Menu>
               </>
             ) : null}

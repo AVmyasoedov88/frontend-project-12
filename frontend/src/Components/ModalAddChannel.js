@@ -1,28 +1,41 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/display-name */
 import {
   Field, Form, Formik, ErrorMessage,
 } from 'formik';
-import { Modal } from 'react-bootstrap';
-import React, { forwardRef } from 'react';
-import { useSelector } from 'react-redux';
+import { Modal, Button } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useEffect, useRef } from 'react';
 import useApiSocet from '../hooks/useApi';
 import { newChannelSchema } from '../Validation/validationSchema';
 import 'react-toastify/dist/ReactToastify.css';
+import { hideModal } from '../slices/modalSlice';
 
-const ModalAddChannel = forwardRef((props, ref) => {
-  const { addChannelSocket } = useApiSocet();
+const ModalAddChannel = () => {
+  const { createNewChannel } = useApiSocet();
+  const ref = useRef();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const channels = useSelector((state) => state.channel.channels);
-  const channelsArray = Object.entries(channels).map(([{ name }]) => name);
+  const channelsArray = Object.values(channels).map(({ name }) => name);
+
   const notify = () => toast.success(t('addChannel'));
 
+  const onHide = () => {
+    dispatch(hideModal('newChannel'));
+  };
+
+  useEffect(() => {
+    ref.current.focus();
+  });
+
   return (
-    <Modal {...props}>
-      <Modal.Header closeButton>
+    <Modal centered show>
+      <Modal.Header closeButton onClick={onHide}>
         <Modal.Title>{t('addNewChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -31,25 +44,21 @@ const ModalAddChannel = forwardRef((props, ref) => {
             channelName: '',
           }}
           validationSchema={newChannelSchema(channelsArray)}
-          onSubmit={async (values) => {
-            try {
-              await addChannelSocket(values.channelName, notify);
-              props.onHide();
-            } catch (error) {
-              toast.error(error);
-            }
+          onSubmit={(values) => {
+            createNewChannel(values.channelName, notify, onHide);
           }}
         >
           {({ errors, touched }) => (
             <Form>
               <Field
+                ref={ref}
                 id="channelName"
                 name="channelName"
                 type="text"
                 className={`mb-2 form-control ${
                   touched.channelName && errors.channelName ? 'is-invalid' : ''
                 }`}
-                innerRef={ref}
+
               />
               <label className="visually-hidden" htmlFor="channelName">
                 Имя канала
@@ -61,20 +70,20 @@ const ModalAddChannel = forwardRef((props, ref) => {
               />
 
               <div className="d-flex justify-content-end">
-                <button
+                <Button
                   type="button"
                   className="me-2 btn btn-secondary"
-                  onClick={props.onHide}
+                  onClick={onHide}
                 >
                   {t('cancel')}
-                </button>
-                <button
+                </Button>
+                <Button
                   type="submit"
                   className="btn btn-primary"
                   disabled={!!(touched.channelName && errors.channelName)}
                 >
                   {t('send')}
-                </button>
+                </Button>
               </div>
             </Form>
           )}
@@ -82,6 +91,6 @@ const ModalAddChannel = forwardRef((props, ref) => {
       </Modal.Body>
     </Modal>
   );
-});
+};
 
 export default ModalAddChannel;
