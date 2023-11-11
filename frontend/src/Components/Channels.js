@@ -9,13 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeActiveChannel } from '../slices/channelSlice';
-// import ModalRenameChannel from './ModalRenameChannel';
 import 'react-toastify/dist/ReactToastify.css';
 import { showRenameChannel, showDeleteChannel } from '../slices/modalSlice';
 
 const Channels = () => {
   const dispatch = useDispatch();
-  // const modals = useSelector((state) => state.modals);
   const { t } = useTranslation();
 
   const channels = useSelector((state) => state.channel.channels);
@@ -58,6 +56,7 @@ const Channels = () => {
                   // className="w-100 rounded-0 text-start text-truncate"
                   variant={+id === +currentChannelId ? 'secondary' : 'light'}
                   split
+
                 >
                   <label className="visually-hidden" htmlFor="channel">
                     Управление каналом

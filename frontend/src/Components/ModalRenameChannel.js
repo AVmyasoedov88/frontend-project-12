@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable-next-line react/display-name  */
@@ -6,7 +7,7 @@ import {
   Field, Form, Formik, ErrorMessage,
 } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
-import { forwardRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,17 +16,21 @@ import useApiSocet from '../hooks/useApi';
 import { newChannelSchema } from '../Validation/validationSchema';
 import { hideModal } from '../slices/modalSlice';
 
-const RenameChannel = forwardRef(() => {
+const RenameChannel = () => {
   const { renameNewChannel } = useApiSocet();
+  const ref = useRef();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const notify = () => toast(t('channelRename'));
   const channels = useSelector((state) => state.channel.channels);
-  const channelsArray = Object.entries(channels).map(([{ name }]) => name);
+  const channelsArray = Object.values(channels).map(({ name }) => name);
   const id = useSelector((state) => state.modals.renameChannel);
   const onHide = () => {
     dispatch(hideModal('renameChannel'));
   };
+  useEffect(() => {
+    ref.current.focus();
+  });
 
   return (
     <Modal centered show>
@@ -51,6 +56,8 @@ const RenameChannel = forwardRef(() => {
           {({ errors, touched }) => (
             <Form>
               <Field
+                innerRef={ref}
+                 // required
                 id="channelName"
                 name="channelName"
                 className={`mb-2 form-control ${
@@ -90,6 +97,6 @@ const RenameChannel = forwardRef(() => {
       </Modal.Body>
     </Modal>
   );
-});
+};
 
 export default RenameChannel;

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-no-bind */
 import axios from 'axios';
@@ -9,7 +11,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Channels from './Channels';
 import ChatHeader from './ChatHeader';
@@ -19,7 +21,7 @@ import MessageBox from './MessageBox';
 import { addChannels, makeActiveChannel } from '../slices/channelSlice';
 import { addMessages } from '../slices/messageSlice';
 import ModalAddChannel from './ModalAddChannel';
-import { requireAuth } from '../routes';
+import { requireAuth, paths } from '../routes';
 import 'react-toastify/dist/ReactToastify.css';
 import { showModal } from '../slices/modalSlice';
 import ModalRenameChannel from './ModalRenameChannel';
@@ -32,7 +34,9 @@ const ChatForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  useEffect(() => {
+  const { logOut } = useAuth();
+
+  useEffect(() => (
     async function fetchData() {
       try {
         const response = await axios.get(requireAuth.dataPath(), {
@@ -40,25 +44,25 @@ const ChatForm = () => {
             Authorization: `Bearer ${auth.token}`,
           },
         });
-
+        // console.log(response);
         dispatch(makeActiveChannel(response.data.currentChannelId));
         dispatch(addChannels(response.data.channels));
         dispatch(addMessages(response.data.messages));
       } catch (error) {
         const { isAxiosError, response: { status } } = error;
-        if (isAxiosError && status === 401) {
+        if (!isAxiosError) {
+          toast.error(t('unknownErr'));
+        } else if (status === 401) {
           toast.error(t('errBadRequest'));
-          const { from } = location.state || {
-            from: { pathname: '/' },
-          };
-          navigate(from);
+          logOut();
+          navigate(paths.login());
+        } else {
+          toast.error('Не известно что');
         }
-        toast.error(t('unknownErr'));
       }
     }
 
-    fetchData();
-  }, [dispatch, auth, t]);
+  ), [dispatch]);
 
   const onClick = () => {
     dispatch(showModal('newChannel'));

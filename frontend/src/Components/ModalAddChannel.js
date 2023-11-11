@@ -51,8 +51,9 @@ const ModalAddChannel = () => {
           {({ errors, touched }) => (
             <Form>
               <Field
-                ref={ref}
+                innerRef={ref}
                 id="channelName"
+                required
                 name="channelName"
                 type="text"
                 className={`mb-2 form-control ${
