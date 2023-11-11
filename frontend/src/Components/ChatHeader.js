@@ -21,6 +21,7 @@ const ChatHeader = () => {
       <p className="m-0">
         <b>
           #
+          {' '}
           {activeChannelName}
         </b>
       </p>
