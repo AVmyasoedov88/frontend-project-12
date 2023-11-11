@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
 import useAuth from '../hooks/useAuth';
 import useApiSocet from '../hooks/useApi';
 
@@ -13,6 +14,10 @@ const FormMessage = () => {
   const channelId = useSelector((state) => state.channel.currentChannelId);
 
   const { addNewMessage } = useApiSocet();
+  const messageInput = useRef(null);
+  useEffect(() => {
+    messageInput.current.focus();
+  }, [channelId]);
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -43,6 +48,7 @@ const FormMessage = () => {
               className="border-0 p-0 ps-2 form-control"
               aria-label="Новое сообщение"
               placeholder="Введите сообщение..."
+              innerRef={messageInput}
             />
 
             <Button
