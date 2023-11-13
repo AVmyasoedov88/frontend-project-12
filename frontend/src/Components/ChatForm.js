@@ -45,8 +45,8 @@ const ChatForm = () => {
           },
         });
         // console.log(response);
-        dispatch(makeActiveChannel(response.data.currentChannelId));
         dispatch(addChannels(response.data.channels));
+        dispatch(makeActiveChannel(response.data.currentChannelId));
         dispatch(addMessages(response.data.messages));
       } catch (error) {
         const { isAxiosError, response: { status } } = error;
