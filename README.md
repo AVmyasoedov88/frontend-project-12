@@ -2,3 +2,5 @@
 [![Actions Status](https://github.com/AVmyasoedov88/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/AVmyasoedov88/frontend-project-12/actions)
 
 [Deployed project](https://frontend-project-12-production-f14a.up.railway.app)
+
+Программа "Чат"
