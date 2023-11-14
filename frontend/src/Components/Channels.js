@@ -51,9 +51,6 @@ const Channels = () => {
             {removable ? (
               <>
                 <Dropdown.Toggle
-                  // className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
-                  id="channel"
-                  // className="w-100 rounded-0 text-start text-truncate"
                   variant={+id === +currentChannelId ? 'secondary' : 'light'}
                   split
 
