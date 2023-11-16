@@ -36,8 +36,8 @@ const ChatForm = () => {
   const location = useLocation();
   const { logOut } = useAuth();
 
-  useEffect(() => (
-    async function fetchData() {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(requireAuth.dataPath(), {
           headers: {
@@ -60,9 +60,10 @@ const ChatForm = () => {
           toast.error('Не известно что');
         }
       }
-    }
+    };
 
-  ), [dispatch, auth.token, logOut, navigate, t]);
+    fetchData();
+  }, [dispatch, auth.token, logOut, navigate, t]);
 
   const onClick = () => {
     dispatch(showModal('newChannel'));
